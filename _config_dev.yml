@@ -1,0 +1,5 @@
+environment: development
+
+# Resources
+enable_getdate: false # gets the publish/update date of resource links
+

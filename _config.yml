@@ -1,0 +1,29 @@
+# Read about configuration here: https://jekyllrb.com/docs/configuration/options/
+title: State of Eth
+description: A dashboard to monitor the state of Ethereum and to promote positive change.
+keywords: ethereum, decentralization, health, diversity, eth
+url: https://stateofeth.com
+permalink: pretty # Do not change this, it will break all links
+timezone: America/New_York
+markdown: kramdown
+livereload: true
+port: 4400
+environment: production
+
+# Plugins
+plugins:
+  - jekyll_include_plugin # https://github.com/flant/jekyll_include_plugin
+  - jekyll-redirect-from # https://github.com/jekyll/jekyll-redirect-from
+redirect_from: # jekyll-redirect-from
+  json: false
+
+# Global variables
+analytics_tag: |
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J7TXHGJDNQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-J7TXHGJDNQ');
+  </script>
