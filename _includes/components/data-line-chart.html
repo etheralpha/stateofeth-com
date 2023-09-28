@@ -1,0 +1,111 @@
+{%- assign chart_id = include.chart_id -%}
+{%- assign data = include.data -%}
+
+{%- assign legend_color = 'rgba(225, 226, 227, 0.9)' -%}
+{%- assign ticks_color = 'rgba(225, 226, 227, 0.9)' -%}
+{%- assign grid_color = 'rgba(43, 43, 43, 0.435)' -%}
+
+
+<style type="text/css">
+  .data-line-chart btn-check:checked+.btn,
+  .data-line-chart .btn.active,
+  .data-line-chart .btn.show,
+  .data-line-chart .btn:first-child:active,
+  .data-line-chart :not(.btn-check)+.btn:active {
+    border-color: var(--bs-btn-active-border-color) !important;
+  }
+</style>
+
+
+<div class="card-text data-line-chart">
+  <div class="mx-auto py-2" style="max-width: 835px">
+    <div class="text-center text-sm-end">
+      <div class="btn-group border mb-2 me-0 me-sm-2" role="group" data-chart="{{chart_id}}" aria-label="Change chart timeframe">
+        <input type="radio" class="btn-check" name="filter" id="{{chart_id}}filter-7" autocomplete="off">
+        <label class="btn btn-outline-black btn-sm border px-sm-3" for="{{chart_id}}filter-7" onclick="updateData(this,{{chart_id}},7)">7d</label>
+
+        <input type="radio" class="btn-check" name="filter" id="{{chart_id}}filter-30" autocomplete="off">
+        <label class="btn btn-outline-black btn-sm border px-sm-3" for="{{chart_id}}filter-30" onclick="updateData(this,{{chart_id}},30)">30d</label>
+
+        <input type="radio" class="btn-check" name="filter" id="{{chart_id}}filter-90" autocomplete="off">
+        <label class="btn btn-outline-black btn-sm border px-sm-3" for="{{chart_id}}filter-90" onclick="updateData(this,{{chart_id}},90)">90d</label>
+
+        <input type="radio" class="btn-check" name="filter" id="{{chart_id}}filter-365" autocomplete="off">
+        <label class="btn btn-outline-black btn-sm border px-sm-3" for="{{chart_id}}filter-365" onclick="updateData(this,{{chart_id}},365)">1y</label>
+
+        <input type="radio" class="btn-check" name="filter" id="{{chart_id}}filter-0" autocomplete="off" checked>
+        <label class="btn btn-outline-black btn-sm border px-sm-3 active" for="{{chart_id}}filter-0" onclick="updateData(this,{{chart_id}},0)">All</label>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <canvas id="{{chart_id}}"></canvas>
+      {%- include components/watermark.html -%}
+    </div>
+    {%- if include.source -%}
+      <p class="mt-2 fst-italic text-center">
+        <small>{{include.source}}</small>
+      </p>
+    {%- endif -%}
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  let {{chart_id}}_data = {{data | jsonify}};
+  let {{chart_id}}_fill = false;
+  let {{chart_id}}_pointStyle = false;
+
+  let {{chart_id}} = new Chart(document.getElementById('{{chart_id}}'), {
+    type: 'line',
+    data: {
+      labels: {{chart_id}}_data.map(item => item.date),
+      labels_all: {{chart_id}}_data.map(item => item.date),
+      datasets: [
+      ]
+    },
+    options: {
+      scales: {
+        x: {
+          type: 'time',
+          time: {
+            unit: 'day',
+            displayFormats: {
+              'day': 'MMM DD',
+              'month': "MMM 'YY",
+              'year': 'MMM YYYY'
+            },
+            tooltipFormat: 'MMM DD, YYYY'
+          },
+          ticks: {
+            color: '{{ticks_color}}'
+          },
+          grid: {
+            color: '{{grid_color}}'
+          }
+        },
+        y: {
+          // min: 0,
+          ticks: {
+            color: '{{ticks_color}}'
+          },
+          grid: {
+            color: '{{grid_color}}'
+          }
+        },
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: '{{legend_color}}'
+          }
+        }
+      },
+      interaction: {
+        intersect: false
+      }
+    }
+  });
+</script>
+
+
+{{include.js}}

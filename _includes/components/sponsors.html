@@ -1,0 +1,15 @@
+{%- capture content -%}
+If you'd like to sponsor this site and feature your logo here, please reach out to hanniabu on [Discord](https://discordapp.com/users/373406915696394242) (direct profile link) or [Twitter](https://twitter.com/hanni_abu).
+{%- endcapture -%}
+
+{%- assign sponsors = site.sponsors -%}
+<div class="card" id='#sponsors'>
+  <div class="card-body">
+    <h2 class="card-title">Sponsors</h2>
+    {%- if sponsors -%}
+      
+    {%- else -%}
+      {{content | markdownify}}
+    {%- endif -%}
+  </div>
+</div>

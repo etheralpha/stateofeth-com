@@ -1,0 +1,30 @@
+{%- capture reading_list -%}
+- [Client Diversity On Ethereum’s Consensus Layer](https://mirror.xyz/jmcook.eth/S7ONEka_0RgtKTZ3-dakPmAHQNPvuj15nh0YGKPFriA)
+- [Prysm: Statement On Client Diversity](https://medium.com/prysmatic-labs/prysmatic-labs-statement-on-client-diversity-c0e3c2f05671)
+- [Nimbus: The Importance Of Client Diversity](https://our.status.im/the-importance-of-client-diversity/)
+- [Lighthouse: Why You Should Switch To Lighthouse](https://lighthouse.sigmaprime.io/switch-to-lighthouse.html)
+- [Chainsafe: Client Diversity In Decentralized Networks](https://medium.com/chainsafe-systems/on-client-diversity-in-decentralized-networks-848aeedfb49d)
+- [The Financial Incentive To Run A Minority Client](https://www.reddit.com/r/ethstaker/comments/ptm04i/the_financial_incentive_to_run_a_minority_client/)
+- [What Happens If Beacon Chain Consensus Fails?](https://www.symphonious.net/2021/09/23/what-happens-if-beacon-chain-consensus-fails/)
+- [Ben Edgington On Diversity, Scenarios, And Penalties](https://upgrading-ethereum.info/altair/part2/incentives/diversity)
+{%- endcapture -%}
+
+
+{%- capture content -%}
+Many know client diversity is important for a more resilient network, but they don't understand why or just how essential it is. It's not only important — **it's critical**. If a single client is used by 2/3rds (66%) of validators, there's a very real risk this can result in disrupting the chain and monetary loss \[[1](https://www.slashed.info/), [2](https://nitter.net/_crypto_crack/status/1504459918539120643)] for node operators.
+
+It takes 2/3rds of validators to reach finality. If a client with 66%+ of marketshare has a bug and forks to its own chain, it'll be capable of finalizing. Once the fork finalizes, the **validators cannot return to the real chain without being slashed**. If 66% of the chain gets slashed simultaneously, the penalty is the whole 32 ETH.
+
+So why is >50% marketshare still dangerous? If a minority client forks, the 50%+ majority client can obtain a 66%+ majority. With no client having a marketshare over 33%, these scenarios are avoided. That's why **<33% marketshare is the goal for all clients**.
+
+{% include components/details.html
+  title="Further reading..."
+  body=reading_list
+%}
+{%- endcapture -%}
+
+
+{% include components/card-text.html
+  title="Risks"
+  body=content
+%}

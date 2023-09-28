@@ -18,12 +18,14 @@ redirect_from: # jekyll-redirect-from
   json: false
 
 # Global variables
-analytics_tag: |
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J7TXHGJDNQ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
 
-    gtag('config', 'G-J7TXHGJDNQ');
-  </script>
+
+# Toast
+enable_toast: false
+toast_msg_id: 1 # must increment when creating a new message
+toast_title: Ether Alpha's Gitcoin grant is live!
+toast_msg: This round runs through August 29th. If you enjoy this or <a href='https://etheralpha.org/' target='_blank'>other tools</a> created, please support to help maintain existing projects and fund new ones." # Best when under 100 characters
+toast_link: https://stateofeth.com # Optional, leave blank to omit
+toast_link_text: Donate
+# August 29, 23:59:59 GMT+0
+toast_expiration: 30000000000 # epoch time in seconds

@@ -1,0 +1,30 @@
+<style type="text/css">
+  /*.btn {
+    border-radius: 0.75rem;
+    color: rgb(98, 159, 244);
+    background-color: rgba(98, 159, 244, 0.1);
+  }*/
+  .toc p {
+    overflow-x: scroll;
+  }
+
+  .toc a {
+    height: 2rem;
+    white-space: nowrap;
+  }
+  .toc a {
+    border-radius: 0.75rem;
+    color: rgb(98, 159, 244);
+    background-color: rgba(98, 159, 244, 0.1);
+  }
+</style>
+
+
+<div class="toc">
+  <p class="d-flex no-wrap">
+    {%- for item in include.headers -%}
+      {%- assign header = "" | append: item -%}
+      <a href="{{header | anchor}}" class="btn me-1 mb-2">{{item}}</a>
+    {%- endfor -%}
+  </p>
+</div>

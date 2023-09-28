@@ -1,0 +1,75 @@
+{%- capture content_table -%}
+
+{:class="table"}
+Client | Resources | Status | Support | Language | Donate**
+-------|-----------|--------|---------|----------|--------
+{% for client in site.data.metrics.consensus-client-diversity-validators.client-info %}
+  {%- assign client_name = client.name -%}
+  {%- if client.name == "Grandine" -%}
+    {%- assign client_name = "*Grandine" -%}
+  {%- endif -%}
+  {%- capture client_link -%}
+    {%- if client.link -%}
+      [{{client_name}}]({{client.link}})
+    {%- else -%}
+      {{client_name}}
+    {%- endif -%}
+  {%- endcapture -%}
+  {%- capture resources -%}
+    {%- if client.github and client.docs and client.chat -%}
+      [Github]({{client.github}}), [Docs]({{client.docs}}), [Chat]({{client.chat}})
+    {%- elsif client.github and client.docs -%}
+      [Github]({{client.github}}), [Docs]({{client.docs}})
+    {%- elsif client.github and client.chat -%}
+      [Github]({{client.github}}), [Chat]({{client.chat}})
+    {%- elsif client.docs and client.chat -%}
+      [Docs]({{client.docs}}), [Chat]({{client.chat}})
+    {%- elsif client.github -%}
+      [Github]({{client.github}})
+    {%- elsif client.docs -%}
+      [Docs]({{client.docs}})
+    {%- elsif client.chat -%}
+      [Chat]({{client.chat}})
+    {%- else -%}
+      -
+    {%- endif -%}
+  {%- endcapture -%}
+  {%- assign status = "-" -%}
+  {%- if client.status -%}
+    {%- assign status = client.status -%}
+  {%- endif -%}
+  {%- assign support = "-" -%}
+  {%- if client.support -%}
+    {%- assign support = client.support -%}
+  {%- endif -%}
+  {%- assign lang = "-" -%}
+  {%- if client.lang -%}
+    {%- assign lang = client.lang -%}
+  {%- endif -%}
+  {%- capture donate -%}
+    {%- if client.donate == "funded" -%}
+      Funded
+    {%- elsif client.donate -%}
+      [Link]({{client.donate}})
+    {%- else -%}
+      -
+    {%- endif -%}
+  {%- endcapture -%}
+{{client_link}} | {{resources}} | {{status}} | {{support}} | {{lang}} | {{donate}}
+{% endfor %}
+
+{%- endcapture -%}
+
+
+{%- capture content_body -%}
+<small>\* Grandine is not open sourced</small>
+
+<small>\*\* Donations made to <a href="https://protocol-guild.readthedocs.io/en/latest/index.html" target="_blank">Protocol Guild</a> are distributed among Ethereum protocol contributors, including client teams. All recipients and splits can be <a href="https://protocol-guild.readthedocs.io/en/latest/9-membership.html" target="_blank">seen here</a>.</small>
+{%- endcapture -%}
+
+
+{% include components/card-table.html
+  title="Client Info"
+  table=content_table
+  body=content_body
+%}

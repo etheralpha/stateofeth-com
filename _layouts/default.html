@@ -1,6 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-  <body>
-    {{content}}
+<html lang="en" data-bs-theme="dark">
+  {%- include components/head.html -%}
+  <body class="d-block d-lg-flex">
+    {%- include components/toast.html -%}
+    {%- include components/sidebar-nav.html -%}
+    <main class="flex-grow-1">
+      {%- if page.title -%}
+        <h1 class="h3 mb-4 pb-2 fw-normal">{{page.title}}</h1>
+      {%- endif -%}
+      {{content}}
+      <!-- {%- include components/sponsors.html -%} -->
+    </main>
+    <script src="/assets/js/main.js" type="application/javascript"></script>
   </body>
 </html>

@@ -1,0 +1,7 @@
+<div class="card">
+  <div class="card-body pb-0">
+    {%- if include.body -%}
+      {{include.body | markdownify}}
+    {%- endif -%}
+  </div>
+</div>
