@@ -8,6 +8,11 @@
       {%- if page.title -%}
         <h1 class="h3 mb-4 pb-2 fw-normal">{{page.title}}</h1>
       {%- endif -%}
+      {% include components/card-alert.html
+        title="Health"
+        body="This is test data, it is not representative of the real data."
+        type="warning"
+      %}
       {{content}}
       {%- include components/section-sponsors.html -%}
     </main>

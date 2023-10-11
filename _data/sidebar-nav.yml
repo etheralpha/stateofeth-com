@@ -43,13 +43,21 @@
       sub_items:
         - link: /metrics/consensus-client-diversity-nodes
           title: Node Client Diversity
+          label: Soon™
+          disabled: true
         - link: /metrics/consensus-client-diversity-validators
           title: Validator Client Diversity
         - link: /metrics/consensus-client-count
           title: Client Count
+          label: Soon™
+          disabled: true
         - link: /metrics/consensus-client-count
           title: Client Languages
+          label: Soon™
+          disabled: true
     - subcategory: Execution Client Diversity
+      label: Soon™
+      disabled: true
       sub_items:
         - link: /metrics/execution-client-diversity-nodes
           title: Node Client Diversity
@@ -60,6 +68,8 @@
         - link: /metrics/execution-client-count
           title: Client Languages
     - subcategory: Staking Diversity
+      label: Soon™
+      disabled: true
       sub_items:
         - link: /metrics/entity-staking-diversity
           title: Entities
@@ -87,7 +97,9 @@
   items:
     - link: /api/documentation
       title: API
-      label: Alpha
+      # label: Alpha
+      label: Soon™
+      disabled: true
 - category: General
   items:
     - link: /about
