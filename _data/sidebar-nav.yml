@@ -31,8 +31,8 @@
   items:
     - link: /dashboards/overview
       title: Overview
-      label: Soon™
-      disabled: true
+      # label: Soon™
+      # disabled: true
 #     - link: /dashboards/watchlist
 #       title: Watchlist
 #       label: Soon™

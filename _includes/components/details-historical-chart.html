@@ -1,0 +1,14 @@
+{%- capture content -%}
+  {% include components/data-line-chart.html
+    chart_id=include.chart_id
+    data=include.data
+    data_attribute=include.data_attribute
+    data_obj_key=include.data_obj_key
+  %}
+{%- endcapture -%}
+
+
+{% include components/details.html
+  title="Historical Data"
+  body=content
+%}

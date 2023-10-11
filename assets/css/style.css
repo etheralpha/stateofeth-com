@@ -100,7 +100,8 @@ main {
   --bs-btn-border-radius: var(--bs-border-radius-sm);
 }
 .btn-group-sm>.btn, .btn-sm {
-  --bs-btn-padding-y: 0.1rem;
+  /*--bs-btn-padding-y: 0.1rem;*/
+  --bs-btn-padding-y: 0.05rem;
   /*--bs-btn-padding-x: 0.35rem;*/
   --bs-btn-padding-x: 0.5rem;
 }
@@ -140,9 +141,12 @@ btn-check:checked+.btn,
 
 
 
-
 .alert {
+  --bs-alert-padding-y: 0.5rem;
+}
+.alert p:last-child {
   padding-bottom: 0;
+  margin-bottom: 0;
 }
 .alert svg {
   margin-top: 0.15rem;
@@ -192,7 +196,15 @@ details[open] summary > .arrowicon {
 .card details[open] {
   padding-bottom: 0.5rem;
 }
-
+details[disabled] summary,
+details.disabled summary,
+summary[disabled],
+summary.disabled {
+  opacity: 0.5 !important;
+  pointer-events: none !important;
+  cursor: default !important;
+  user-select: none;
+}
 
 
 
@@ -247,7 +259,14 @@ table>thead {
 .form-select {
   font-size: inherit;
 }
-
+select.form-select {
+  /*background-color: rgb(78 102 137 / 10%);*/
+  /*background-color: rgb(138 168 210 / 10%);*/
+}
+select.form-select:focus {
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  box-shadow: none;
+}
 
 
 hr {

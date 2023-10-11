@@ -1,4 +1,4 @@
-{%- capture content -%}
+<p>Migrate to a minority client using step-by-step guides.</p>
 
 <div class="input-group mb-3">
   <label class="input-group-text" for="fromSelect">From</label>
@@ -36,16 +36,6 @@
 <div id="guideList" class="d-none">
   <!-- Populated w/ JS based on matching results from _data/migration-guides.yml -->
 </div>
-
-{%- endcapture -%}
-
-
-<p>Migrate to a minority client using step-by-step guides:</p>
-
-{% include components/details.html
-  title="Manual Client Migration Guides"
-  body=content
-%}
 
 
 <script type="text/javascript">
@@ -88,13 +78,13 @@
           let type = "";
           switch (guide["type"]) {
             case 'doc':
-              type = '{{site.data.icons.docs}}';
+              type = '{{site.data.icons.docs}} &nbsp;';
               break;
             case 'video':
-              type = '{{site.data.icons.youtube}}';
+              type = '{{site.data.icons.youtube}} &nbsp;';
               break;
             case 'tool':
-              type = '{{site.data.icons.tool}}';
+              type = '{{site.data.icons.tool}} &nbsp;';
               break;
           }
           let guideLink = "";

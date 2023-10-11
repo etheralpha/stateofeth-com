@@ -1,5 +1,6 @@
 {%- assign chart_id = include.chart_id -%}
 {%- assign data = include.data -%}
+{%- assign data_obj_key = include.data_obj_key -%}
 
 {%- assign legend_color = 'rgba(225, 226, 227, 0.9)' -%}
 {%- assign ticks_color = 'rgba(225, 226, 227, 0.9)' -%}
@@ -22,28 +23,33 @@
     <div class="text-center text-sm-end">
       <div class="btn-group border mb-2 me-0 me-sm-2" role="group" data-chart="{{chart_id}}" aria-label="Change chart timeframe">
         <input type="radio" class="btn-check" name="filter" id="{{chart_id}}filter-7" autocomplete="off">
-        <label class="btn btn-outline-black btn-sm border px-sm-3" for="{{chart_id}}filter-7" onclick="updateData(this,{{chart_id}},7)">7d</label>
+        <label class="btn btn-outline-black btn-sm border px-sm-3" for="{{chart_id}}filter-7" 
+              onclick="updateDataTimeframe(this,{{chart_id}},7)">7d</label>
 
         <input type="radio" class="btn-check" name="filter" id="{{chart_id}}filter-30" autocomplete="off">
-        <label class="btn btn-outline-black btn-sm border px-sm-3" for="{{chart_id}}filter-30" onclick="updateData(this,{{chart_id}},30)">30d</label>
+        <label class="btn btn-outline-black btn-sm border px-sm-3" for="{{chart_id}}filter-30" 
+              onclick="updateDataTimeframe(this,{{chart_id}},30)">30d</label>
 
         <input type="radio" class="btn-check" name="filter" id="{{chart_id}}filter-90" autocomplete="off">
-        <label class="btn btn-outline-black btn-sm border px-sm-3" for="{{chart_id}}filter-90" onclick="updateData(this,{{chart_id}},90)">90d</label>
+        <label class="btn btn-outline-black btn-sm border px-sm-3" for="{{chart_id}}filter-90" 
+              onclick="updateDataTimeframe(this,{{chart_id}},90)">90d</label>
 
         <input type="radio" class="btn-check" name="filter" id="{{chart_id}}filter-365" autocomplete="off">
-        <label class="btn btn-outline-black btn-sm border px-sm-3" for="{{chart_id}}filter-365" onclick="updateData(this,{{chart_id}},365)">1y</label>
+        <label class="btn btn-outline-black btn-sm border px-sm-3" for="{{chart_id}}filter-365" 
+              onclick="updateDataTimeframe(this,{{chart_id}},365)">1y</label>
 
         <input type="radio" class="btn-check" name="filter" id="{{chart_id}}filter-0" autocomplete="off" checked>
-        <label class="btn btn-outline-black btn-sm border px-sm-3 active" for="{{chart_id}}filter-0" onclick="updateData(this,{{chart_id}},0)">All</label>
+        <label class="btn btn-outline-black btn-sm border px-sm-3 active" for="{{chart_id}}filter-0" 
+              onclick="updateDataTimeframe(this,{{chart_id}},0)">All</label>
       </div>
     </div>
     <div class="d-flex justify-content-center">
       <canvas id="{{chart_id}}"></canvas>
       {%- include components/watermark.html -%}
     </div>
-    {%- if include.source -%}
+    {%- if include.data_attribute -%}
       <p class="mt-2 fst-italic text-center">
-        <small>{{include.source}}</small>
+        <small>{{include.data_attribute | markdownify | remove: "<p>" | remove: "</p>"}}</small>
       </p>
     {%- endif -%}
   </div>
@@ -108,4 +114,51 @@
 </script>
 
 
-{{include.js}}
+<script type="text/javascript">
+  let {{chart_id}}_labels = [];
+
+  // create array of labels
+  {{chart_id}}_data.forEach(day => {
+    day.data["{{data_obj_key}}"].forEach(item => {
+      if (!{{chart_id}}_labels.includes(item.name)) {
+        {{chart_id}}_labels.push(item.name);
+      }
+    });
+  });
+
+  // fill in missing data
+  {{chart_id}}_data.forEach(item => {
+    let item_exists = false;
+    {{chart_id}}_labels.forEach(itemName => {
+      if (item.data.distribution.find(item => item.name === itemName)) {
+        item_exists = true;
+      } else {
+        item.data["{{data_obj_key}}"].push({"name":itemName,"value":undefined});
+        log(`No data for ${itemName} on ${item.date}`);
+      }
+      item_exists = false;
+    })
+  });
+
+  // create chart datasets
+  {{chart_id}}_labels.forEach(function (label, i) {
+    let dataset_data = {{chart_id}}_data.map(day => Math.round( day.data["{{data_obj_key}}"].filter(item => item.name == label)[0].value * 10000)/100);
+
+    {{chart_id}}.data.datasets[i] = {
+      label: label[0].toUpperCase() + label.slice(1),
+      data: dataset_data,
+      data_all: dataset_data,
+      yAxisID: 'y',
+      fill: {{chart_id}}_fill,
+      pointStyle: {{chart_id}}_pointStyle
+    };
+  });
+
+  // create y-tick callback
+  {{chart_id}}.options.scales.y.ticks.callback = function(value) {
+    return `${value}%`;
+  };
+
+  // update chart
+  {{chart_id}}.update();
+</script>

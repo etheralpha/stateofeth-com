@@ -12,6 +12,11 @@
     {%- if include.body -%}
       {{include.body | markdownify}}
     {%- endif -%}
+    {%- if include.caption -%}
+      <div class="small">
+        {{include.caption | markdownify}}
+      </div>
+    {%- endif -%}
     {%- if include.button_link and include.button_text -%}
       <a class="btn btn-primary" href="{{include.button_link}}" role="button">{{include.button_text}}</a>
     {%- endif -%}

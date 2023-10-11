@@ -1,4 +1,4 @@
-{%- capture content_table -%}
+{%- capture table -%}
 
 {:class="table"}
 Client | Resources | Status | Support | Language | Donate**
@@ -61,15 +61,15 @@ Client | Resources | Status | Support | Language | Donate**
 {%- endcapture -%}
 
 
-{%- capture content_body -%}
-<small>\* Grandine is not open sourced</small>
+{%- capture caption -%}
+\* Grandine is not open sourced
 
-<small>\*\* Donations made to <a href="https://protocol-guild.readthedocs.io/en/latest/index.html" target="_blank">Protocol Guild</a> are distributed among Ethereum protocol contributors, including client teams. All recipients and splits can be <a href="https://protocol-guild.readthedocs.io/en/latest/9-membership.html" target="_blank">seen here</a>.</small>
+\*\* Donations made to [Protocol Guild](https://protocol-guild.readthedocs.io/en/latest/index.html) are distributed among Ethereum protocol contributors, including client teams. All recipients and splits can be [seen here](https://protocol-guild.readthedocs.io/en/latest/9-membership.html).
 {%- endcapture -%}
 
 
 {% include components/card-table.html
   title="Client Info"
-  table=content_table
-  body=content_body
+  table=table
+  caption=caption
 %}

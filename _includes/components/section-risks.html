@@ -1,0 +1,21 @@
+{%- capture further_reading -%}
+  {% for item in include.data.further_reading %}
+- [{{item.title}}]({{item.link}})
+  {%- endfor -%}
+{%- endcapture -%}
+
+
+{%- capture content -%}
+{{include.data.risks}}
+
+{% include components/details.html
+  title="Further reading..."
+  body=further_reading
+%}
+{%- endcapture -%}
+
+
+{% include components/card-text.html
+  title="Risks"
+  body=content
+%}

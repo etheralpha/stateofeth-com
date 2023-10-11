@@ -1,5 +1,9 @@
+{%- assign all_data = include.data -%}
+{%- assign spot_data = all_data | last -%}
+{%- assign data = spot_data.data.distribution -%}
+
 <div>
-  {%- for item in include.data -%}
+  {%- for item in data -%}
     {%- assign name = item.name | capitalize -%}
     {%- assign value = item.value | times: 100 | round: 2 -%}
     {%- assign accuracy = "no data" -%}
@@ -59,8 +63,8 @@
   {%- endfor -%}
 </div>
 
-{%- if include.source -%}
-  <p class="mt-2 fst-italic">
-    <small>{{include.source}}</small>
+{%- if include.data_attribute -%}
+  <p class="fst-italic">
+    <small>{{include.data_attribute | markdownify | remove: "<p>" | remove: "</p>"}}</small>
   </p>
 {%- endif -%}

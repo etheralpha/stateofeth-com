@@ -17,16 +17,15 @@
     color: rgb(98, 159, 244);
     background-color: rgba(98, 159, 244, 0.1);
   }
-  .toc a:hover,
-  .toc .btn:hover {
-    background-color: var(--soe-accent-blue) !important;
+  .toc a:hover {
+    background-color: var(--soe-accent-blue);
   }
 </style>
 
 
 <div class="toc">
   <p class="d-flex no-wrap">
-    {%- for item in include.headers -%}
+    {%- for item in include.data.toc -%}
       {%- assign header = "" | append: item -%}
       <a href="{{header | anchor}}" class="btn me-1 mb-2">{{item}}</a>
     {%- endfor -%}

@@ -1,0 +1,65 @@
+## - title:      = metric name
+##   link:       = link to page
+##   data:       = data file path
+##   health:     = health value
+
+# Template to copy for new entries
+# - title: 
+#   link: 
+#   data: 
+#   health: 
+
+
+# Entries are shown in the order listed
+- title: Node Consensus Client Diversity
+  link: /metrics/consensus-client-diversity-nodes
+  data: 
+  health: 55
+- title: Validator Consensus Client Diversity
+  link: /metrics/consensus-client-diversity-validators
+  data: 
+  health: 57
+- title: Consensus Client Count
+  link: /metrics/consensus-client-count
+  data: 
+  health: 100
+- title: Consensus Client Languages
+  link: /metrics/consensus-client-languages
+  data: 
+  health: 100
+- title: Node Execution Client Diversity
+  link: /metrics/execution-client-diversity-nodes
+  data: 
+  health: 14
+- title: Validator Execution Client Diversity
+  link: /metrics/execution-client-diversity-validators
+  data: 
+  health: 18
+- title: Execution Client Count
+  link: /metrics/execution-client-count
+  data: 
+  health: 100
+- title: Execution Client Languages
+  link: /metrics/execution-client-languages
+  data: 
+  health: 100
+- title: Entities Staking Diversity
+  link: /metrics/entity-staking-diversity
+  data: 
+  health: 51
+- title: LSTs / Pools Staking Diversity
+  link: /metrics/lst-staking-diversity
+  data: 
+  health: 32
+- title: Node Count
+  link: /metrics/node-count
+  data: 
+  health: 80
+- title: Node Geographic Diversity
+  link: /metrics/geographic-diversity-nodes
+  data: 
+  health: 61
+- title: Validator Geographic Diversity
+  link: /metrics/geographic-diversity-validators
+  data: 
+  health: 52

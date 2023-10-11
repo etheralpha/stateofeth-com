@@ -5,21 +5,26 @@ permalink: /metrics/consensus-client-diversity-validators
 ---
 
 
-{%- include partials/metrics/consensus-client-diversity-validators/toc.html -%}
+{%- include components/section-toc.html 
+	data=site.data.metrics.consensus-client-diversity-validators.content -%}
 
-{%- include partials/metrics/consensus-client-diversity-validators/description.html -%}
+{%- include components/section-description.html 
+	data=site.data.metrics.consensus-client-diversity-validators.content -%}
 
-<!-- {%- include partials/metrics/consensus-client-diversity-validators/health.html -%} -->
+{%- include components/section-health.html 
+	data=site.data.metrics.consensus-client-diversity-validators.content -%}
 
-{%- include partials/metrics/consensus-client-diversity-validators/data.html -%}
+{%- include components/section-data.html 
+	data=site.data.metrics.consensus-client-diversity-validators.content -%}
 
-<!-- {%- include partials/metrics/consensus-client-diversity-validators/data-source.html -%} -->
+{%- include components/section-risks.html 
+	data=site.data.metrics.consensus-client-diversity-validators.content -%}
 
-{%- include partials/metrics/consensus-client-diversity-validators/risks.html -%}
-
-{%- include partials/metrics/consensus-client-diversity-validators/take-action.html -%}
+{%- include components/section-take-action.html 
+	data=site.data.metrics.consensus-client-diversity-validators.content -%}
 
 {%- include partials/metrics/consensus-client-diversity-validators/client-info.html -%}
 
-{%- include partials/metrics/consensus-client-diversity-validators/resources.html -%}
+{%- include components/section-resources.html 
+	data=site.data.metrics.consensus-client-diversity-validators.content -%}
 

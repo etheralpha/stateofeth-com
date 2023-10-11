@@ -1,0 +1,24 @@
+## img          = sponsor img link
+## title        = (optional) sponsor name
+## link         = (optional) sponsor link
+## tier         = sponsor tier (1-3); lower number = higher donation
+
+# Template to copy for new entries
+# - img: "/assets/img/sponsors/"
+#   title: 
+#   link: 
+
+
+# Entries are shown in the order listed
+- img: "/assets/img/sponsors/ef.svg"
+  title: Ethereum Foundation
+  link: "https://ethereum.foundation/"
+  tier: 1
+- img: "/assets/img/sponsors/ethstaker.svg"
+  title: EthStaker
+  link: "https://ethstaker.cc"
+  tier: 1
+- img: "/assets/img/sponsors/diva.svg"
+  title: Diva
+  link: "https://diva.community/"
+  tier: 3

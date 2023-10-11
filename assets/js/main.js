@@ -1,6 +1,7 @@
 ---
 ---
 
+{% include_relative /dataSourceSelect.js %}
 {% include_relative /historicalCharts.js %}
 {% include_relative /updateLinkTargets.js %}
 

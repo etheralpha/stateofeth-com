@@ -1,0 +1,12 @@
+{%- capture content -%}
+The health value is designed to provide a bird's eye view on the general health of a metric.
+
+{{include.data.health_methodology}}
+{%- endcapture -%}
+
+{% include components/details.html
+  title="Health - 74.25%"
+  body=content
+%}
+
+
