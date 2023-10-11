@@ -1,5 +1,15 @@
-<div class="card">
-  <div class="card-body pb-0">
+<style type="text/css">
+  .card-msg {
+    --bs-card-spacer-y: 0.6875rem;
+  }
+  .card-msg .card-body p:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+</style>
+
+<div class="card card-msg">
+  <div class="card-body">
     {%- if include.body -%}
       {{include.body | markdownify}}
     {%- endif -%}

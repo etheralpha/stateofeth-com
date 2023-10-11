@@ -84,9 +84,15 @@
             <div class="progress-bar bg-trans progress-success" role="progressbar" style="width: 20%;"></div>
           </div>
         </td>
+        {%- assign disabled = "" -%}
+        {%- assign btn_color = "primary" -%}
+        {%- if item.disabled -%}
+          {%- assign disabled = "disabled" -%}
+          {%- assign btn_color = "outline-secondary" -%}
+        {%- endif -%}
         <td class="details">
           {%- if item.link -%}
-            <a href="{{item.link}}" class="btn btn-sm btn-primary">View Details</a>
+            <a href="{{item.link}}" class="btn btn-sm btn-{{btn_color}} {{disabled}}">View Details</a>
           {%- else -%}
             no details
           {%- endif -%}
