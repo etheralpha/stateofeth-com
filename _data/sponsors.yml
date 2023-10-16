@@ -18,7 +18,11 @@
   title: EthStaker
   link: "https://ethstaker.cc"
   tier: 1
-- img: "/assets/img/sponsors/diva.svg"
-  title: Diva
-  link: "https://diva.community/"
+# - img: "/assets/img/sponsors/diva.svg"
+#   title: Diva
+#   link: "https://diva.community/"
+#   tier: 3
+- img: "/assets/img/sponsors/staking-foundation.svg"
+  title: Staking Foundation
+  link: "https://staking.foundation/"
   tier: 3

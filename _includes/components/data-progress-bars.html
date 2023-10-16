@@ -2,6 +2,7 @@
 {%- assign spot_data = all_data | last -%}
 {%- assign data = spot_data.data.distribution -%}
 
+
 <div>
   {%- for item in data -%}
     {%- assign name = item.name | capitalize -%}
@@ -63,8 +64,21 @@
   {%- endfor -%}
 </div>
 
+
 {%- if include.data_attribute -%}
   <p class="fst-italic">
-    <small>{{include.data_attribute | markdownify | remove: "<p>" | remove: "</p>"}}</small>
+    <small>{{include.data_attribute | markdownify | remove: "<p>" | remove: ".</p>"}}<span class="last-updated"></span></small>
   </p>
 {%- endif -%}
+
+
+<script type="text/javascript">
+  function populateLastUpdated(updatedTimestamp) {
+    const currentTimestamp = Math.round(Date.now()/10000)*10;
+    const delta = currentTimestamp - updatedTimestamp;
+    const detltHours = Math.round(delta/3600);
+    const lastUpdated = ` — last updated ${detltHours}hrs ago`;
+    document.querySelector('.last-updated').innerText = lastUpdated;
+  }
+  populateLastUpdated({{spot_data.timestamp}});
+</script>

@@ -11,67 +11,93 @@
 
 
 # Entries are shown in the order listed
-- title: Node Consensus Client Diversity
+- id: consensusClientDiversityNodes
+  title: Node Consensus Client Diversity
   link: /metrics/consensus-client-diversity-nodes
   disabled: true
   data: 
   health: 55
-- title: Validator Consensus Client Diversity
+  icon: window_sidebar
+- id: consensusClientDiversityValidators
+  title: Validator Consensus Client Diversity
   link: /metrics/consensus-client-diversity-validators
   data: 
   health: 57
-- title: Consensus Client Count
+  icon: window_sidebar
+- id: consensusClientCount
+  title: Consensus Client Count
   link: /metrics/consensus-client-count
   disabled: true
   data: 
   health: 100
-- title: Consensus Client Languages
+  icon: window_sidebar
+- id: consensusClientLanguages
+  title: Consensus Client Languages
   link: /metrics/consensus-client-languages
   disabled: true
   data: 
   health: 100
-- title: Node Execution Client Diversity
+  icon: window_sidebar
+- id: executionClientDiversityNodes
+  title: Node Execution Client Diversity
   link: /metrics/execution-client-diversity-nodes
   disabled: true
   data: 
   health: 14
-- title: Validator Execution Client Diversity
+  icon: window_split
+- id: executionClientDiversityValidators
+  title: Validator Execution Client Diversity
   link: /metrics/execution-client-diversity-validators
   disabled: true
   data: 
   health: 18
-- title: Execution Client Count
+  icon: window_split
+- id: executionClientCount
+  title: Execution Client Count
   link: /metrics/execution-client-count
   disabled: true
   data: 
   health: 100
-- title: Execution Client Languages
+  icon: window_split
+- id: executionClientLanguages
+  title: Execution Client Languages
   link: /metrics/execution-client-languages
   disabled: true
   data: 
   health: 100
-- title: Entities Staking Diversity
+  icon: window_split
+- id: entityStakingDiversity
+  title: Entity Staking Diversity
   link: /metrics/entity-staking-diversity
   disabled: true
   data: 
   health: 51
-- title: LSTs / Pools Staking Diversity
+  icon: people
+- id: lstStakingDiversity
+  title: LST Staking Diversity
   link: /metrics/lst-staking-diversity
   disabled: true
   data: 
   health: 32
-- title: Node Count
+  icon: people
+- id: nodeCount
+  title: Node Count
   link: /metrics/node-count
   disabled: true
   data: 
   health: 80
-- title: Node Geographic Diversity
+  icon: plugin
+- id: geographicDiversityNodes
+  title: Node Geographic Diversity
   link: /metrics/geographic-diversity-nodes
   disabled: true
   data: 
   health: 61
-- title: Validator Geographic Diversity
+  icon: globe
+- id: geographicDiversityValidators
+  title: Validator Geographic Diversity
   link: /metrics/geographic-diversity-validators
   disabled: true
   data: 
   health: 52
+  icon: globe

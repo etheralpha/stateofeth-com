@@ -12,6 +12,8 @@
     overflow-y: scroll;
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */
+
+    font-size: 0.85rem;
   }
   aside::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
@@ -51,7 +53,8 @@
     opacity: 1;
   }
   .sidebar-nav details .sidebar-link:not(summary) {
-    padding-left: 1rem;
+    /*padding-left: 1rem;*/
+    padding-left: 1.9rem;
   }
 
   .sidebar-nav .sidebar-link:hover {
@@ -129,7 +132,7 @@
     <div class="sidebar-brand mb-2">
       <!-- <a href="/" class="link-light fw-bold lead"><span class="me-1 fs-3">🌡️</span> State of Eth</a> -->
       <a href="/" class="link-light fw-bold lead">
-        <img class="me-1 fs-3" src="/assets/img/logo/logo-md.png"> 
+        <img class="me-1 fs-3" src="/assets/img/logo/logo-md.png" alt="🌡️"> 
         State of Eth
       </a>
     </div>
@@ -138,23 +141,33 @@
       <div class="sidebar-cat">{{category_name}}</div>
       {%- for item in category.items -%}
         {%- if item.subcategory -%}
+          {%- assign icon = "" -%}
+          {%- if item.icon -%}
+            {%- capture icon  -%}
+              <span class="me-2">{{site.data.icons[item.icon]}}</span>
+            {%- endcapture -%}
+          {%- endif -%}
           {%- assign label = "" -%}
           {%- if item.label -%}
             {%- capture label  -%}
               <span class="badge">{{item.label}}</span>
             {%- endcapture -%}
           {%- endif -%}
+          {%- capture expand_arrow  -%}
+            <span class="arrowicon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+          {%- endcapture -%}
           {%- assign disabled = "" -%}
           {%- if item.disabled -%}
             {%- assign disabled = "disabled" -%}
+            {%- assign expand_arrow = "" -%}
           {%- endif -%}
           {%- assign open = "" -%}
           {%- if item.subcategory == active_subcategory -%}
             {%- assign open = "open" -%}
           {%- endif -%}
           <details {{open}}>
-            <summary class="sidebar-link {{disabled}}">{{item.subcategory}}{{label}}
-              <span class="arrowicon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            <summary class="sidebar-link {{disabled}}">{{icon}}{{item.subcategory}}{{label}}
+              {{expand_arrow}}
             </summary>
             {%- for subitem in item.sub_items -%}
               {%- assign new_tab = "" -%}
@@ -191,6 +204,12 @@
           {%- if item.link == page.permalink -%}
             {%- assign active = "active" -%}
           {%- endif -%}
+          {%- assign icon = "" -%}
+          {%- if item.icon -%}
+            {%- capture icon  -%}
+              <span class="me-2">{{site.data.icons[item.icon]}}</span>
+            {%- endcapture -%}
+          {%- endif -%}
           {%- assign label = "" -%}
           {%- if item.label -%}
             {%- capture label  -%}
@@ -202,9 +221,9 @@
             {%- assign disabled = "disabled" -%}
           {%- endif -%}
           {%- if category_name == "Metrics" -%}
-            <a href="{{item.link}}" {{new_tab}} class="sidebar-link sidebar-link-main {{disabled}} {{active}} {{new_tab_class}}">{{item.title}}{{label}}</a>
+            <a href="{{item.link}}" {{new_tab}} class="sidebar-link sidebar-link-main {{disabled}} {{active}} {{new_tab_class}}">{{icon}}{{item.title}}{{label}}</a>
           {%- else -%}
-            <a href="{{item.link}}" {{new_tab}} class="sidebar-link {{disabled}} {{active}} {{new_tab_class}}">{{item.title}}{{label}}</a>
+            <a href="{{item.link}}" {{new_tab}} class="sidebar-link {{disabled}} {{active}} {{new_tab_class}}">{{icon}}{{item.title}}{{label}}</a>
           {%- endif -%}
         {%- endif -%}
       {%- endfor -%}

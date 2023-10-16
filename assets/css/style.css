@@ -152,7 +152,10 @@ btn-check:checked+.btn,
   margin-top: 0.15rem;
   margin-right: 0.5rem;
 }
-.main-alert {
+.alert a {
+  color: inherit;
+}
+.alert.main-alert {
   margin-top: -0.75rem; /* only for one one top of page */
   margin-bottom: 1.75rem; /* only for one one top of page */
 }
@@ -306,7 +309,12 @@ hr {
 
 
 
-
+.tooltip {
+  --bs-tooltip-font-size: 0.8rem;
+  --bs-tooltip-opacity: 1;
+  --bs-tooltip-bg: #1d2229;
+  --bs-tooltip-color: inherit;
+}
 
 
 

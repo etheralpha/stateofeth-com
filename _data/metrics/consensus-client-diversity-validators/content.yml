@@ -19,7 +19,7 @@ data:
       data_file_name: blockprint
       data_source: blockprint
       data_attribute: |
-        Data provided by [Sigma Prime's Blockprint](https://github.com/sigp/blockprint/blob/main/docs/api.md).
+        Data provided by [Sigma Prime's Blockprint](https://blockprint.sigp.io/).
       data_methodology: |
         Blockprint analyzes each client’s block proposal style as described in [this Twitter thread](https://twitter.com/sproulM_/status/1440512518242197516) ([Nitter](https://nitter.snopyta.org/sproulM_/status/1440512518242197516)).
       historical_chart: true
@@ -28,9 +28,9 @@ data:
       data_file_name: blockprint
       data_source: blockprint2
       data_attribute: |
-        Data provided by [Sigma Prime's Blockprint2](https://github.com/sigp/blockprint/blob/main/docs/api.md)
+        Data provided by [Sigma Prime's Blockprint2](https://blockprint.sigp.io/)
       data_methodology: |
-        Blockprint analyzes each client’s block proposal style as described in [this Twitter thread](https://twitter.com/sproulM_/status/1440512518242197516) ([Nitter](https://nitter.snopyta.org/sproulM_/status/1440512518242197516)).
+        Blockprint2 analyzes each client’s block proposal style as described in [this Twitter thread](https://twitter.com/sproulM_/status/1440512518242197516) ([Nitter](https://nitter.snopyta.org/sproulM_/status/1440512518242197516)).
       historical_chart: false
 risks: |
   Validator client diversity is critical for network resiliency. If a single client is used by 2/3rds (66%) of validators, there's a very real risk this can result in disrupting the chain and monetary loss \[[1](https://www.slashed.info/), [2](https://nitter.net/_crypto_crack/status/1504459918539120643)] for node operators.

@@ -3,12 +3,27 @@
     height: 4rem;
   }
   #sponsors .sponsor.tier-1 img {
+    height: auto;
+    max-height: 4rem;
+    max-width: 300px;
+  }
+  #sponsors .sponsor.tier-1 .svg {
     height: 4rem;
   }
   #sponsors .sponsor.tier-2 img {
+    height: auto;
+    max-height: 2.75rem;
+    max-width: 225px;
+  }
+  #sponsors .sponsor.tier-2 .svg {
     height: 2.75rem;
   }
   #sponsors .sponsor.tier-3 img {
+    height: auto;
+    max-height: 1.5rem;
+    max-width: 175px;
+  }
+  #sponsors .sponsor.tier-3 .svg {
     height: 1.5rem;
   }
 </style>
@@ -28,12 +43,16 @@ If you'd like to sponsor this site and feature your logo here, please reach out 
         {%- for sponsor in sponsors -%}
           {%- if i == sponsor.tier -%}
             <div class="col sponsor tier-{{sponsor.tier}} d-flex align-items-center justify-content-center p-2">
+              {%- assign svg = "" -%}
+              {%- if sponsor.img contains ".svg" -%}
+                {%- assign svg = "svg" -%}
+              {%- endif -%}
               {%- if sponsor.link -%}
                 <a href="{{sponsor.link}}">
-                  <img src="{{sponsor.img}}" title="{{sponsor.title}}">
+                  <img src="{{sponsor.img}}" class="{{svg}}" style="{{sponsor.style}}" title="{{sponsor.title}}">
                 </a>
               {%- else -%} 
-                <img src="{{sponsor.img}}" title="{{sponsor.title}}">
+                <img src="{{sponsor.img}}" class="{{svg}}" style="{{sponsor.style}}" title="{{sponsor.title}}">
               {%- endif -%}
             </div>
           {%- endif -%}

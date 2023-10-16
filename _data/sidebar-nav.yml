@@ -33,13 +33,14 @@
       title: Overview
       # label: Soon™
       # disabled: true
-#     - link: /dashboards/watchlist
-#       title: Watchlist
-#       label: Soon™
+    - link: /dashboards/watchlist
+      title: Watchlist
+      label: new
 #       disabled: true
 - category: Metrics
   items:
     - subcategory: Consensus Client Diversity
+      icon: window_sidebar
       sub_items:
         - link: /metrics/consensus-client-diversity-nodes
           title: Node Client Diversity
@@ -56,6 +57,7 @@
           label: Soon™
           disabled: true
     - subcategory: Execution Client Diversity
+      icon: window_split
       label: Soon™
       disabled: true
       sub_items:
@@ -68,6 +70,7 @@
         - link: /metrics/execution-client-count
           title: Client Languages
     - subcategory: Staking Diversity
+      icon: people
       label: Soon™
       disabled: true
       sub_items:
@@ -78,6 +81,7 @@
         - link: /metrics/lst-staking-diversity
           title: LSTs / Pools
     - subcategory: Geographic Diversity
+      icon: globe
       label: Soon™
       disabled: true
       sub_items:
@@ -91,12 +95,14 @@
           disabled: true
     - link: /metrics/node-count
       title: Node Count
+      icon: plugin
       label: Soon™
       disabled: true
 - category: Tools
   items:
     - link: /api/documentation
       title: API
+      icon: code
       # label: Alpha
       label: Soon™
       disabled: true
