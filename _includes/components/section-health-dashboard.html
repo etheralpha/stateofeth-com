@@ -13,11 +13,12 @@
   }
   #healthDashboard .star svg {
     fill: transparent;
-    stroke: gold;
+    stroke: var(--bs-body-color);
     opacity: 0.9;
   }
   #healthDashboard .star.favorite svg {
     fill: gold;
+    stroke: gold;
   }
   #healthDashboard th.category,
   #healthDashboard td.category {
@@ -52,6 +53,12 @@
   #healthDashboard .sort svg {
     margin-top: -3px;
     cursor: pointer;
+  }
+  #favoritingHelpText .help-star svg {
+    fill: transparent;
+    stroke: var(--bs-body-color);
+    opacity: 0.9;
+    margin-top: -5px;
   }
 </style>
 
@@ -101,20 +108,20 @@
             {%- assign state = "Danger" -%}
           {%- endif -%}
           <div class="progress position-relative" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-original-title="
-              <div class=&quot;progress-tooltip text-capitalize text-start&quot;>
+              <div class=&quot;progress-tooltip text-start&quot;>
                 <div class=&quot;mb-1 pb-1 text-center border-bottom border-secondary&quot;>
                   Status:<br>{{item.health}}% ({{state}})
                 </div>
                 <div class=&quot;d-flex justify-content-between&quot;>
-                  <span class=&quot;me-2&quot;>danger:</span><span>0-50%</span>
+                  <span class=&quot;me-2&quot;>Danger:</span><span>0-50%</span>
                 </div>
                 <div class=&quot;d-flex justify-content-between&quot;>
-                  <span class=&quot;me-2&quot;>caution:</span><span>50-80%</span>
+                  <span class=&quot;me-2&quot;>Caution:</span><span>50-80%</span>
                 </div>
                 <div class=&quot;d-flex justify-content-between mb-1 pb-1 border-bottom border-secondary&quot;>
-                <span class=&quot;me-2&quot;>great:</span><span>80-100%</span>
+                <span class=&quot;me-2&quot;>Great:</span><span>80-100%</span>
                 </div>
-                
+                <div>Go to View Details > Health to see how this is calculated.</div>
               </div>">
             <div class="progress-bar position-absolute bg-{{color}}" role="progressbar" style="width: {{item.health}}%;" aria-valuenow="{{item.health}}" aria-valuemin="0" aria-valuemax="100"></div>
             <div class="progress-bar bg-trans progress-danger" role="progressbar" style="width: 50%;"></div>
@@ -140,6 +147,14 @@
     </tbody>
   </table>
 </div>
+
+
+{%- capture favoriting_help_text -%}
+  To add a metric to your watchlist, click the {{site.data.icons.star_fill | addclass: "help-star"}} icon in the [Health Overview Dashboard](/dashboards/overview).
+{%- endcapture -%}
+{%- if include.dashboard == "favorites" -%}
+  <div id="favoritingHelpText">{{favoriting_help_text | markdownify}}</div>
+{%- endif -%}
 
 
 <script type="text/javascript">
@@ -259,13 +274,21 @@
   }
 
   function refreshFavorites() {
-    // remove all favorite star highlights
+    let currentFavorites = document.querySelectorAll(`.favorite`);
+
+    {%- if include.dashboard == "favorites" -%}
+      if (favorites.length == 0) {
+        document.getElementById("healthDashboard").classList.add("d-none");
+      } else {
+        document.getElementById("healthDashboard").classList.remove("d-none");
+      }
+    {%- endif -%}
+
     document.querySelectorAll(`.favorite`).forEach(item => {
       item.classList.remove("favorite");
     });
 
     // add favorite star highlights
-    console.log(localStorage)
     favorites.forEach(id => {
       document.querySelectorAll(`#${id} .star`).forEach(item => {
         item.classList.add("favorite");
@@ -273,7 +296,7 @@
     });
 
     // highlight favorites and add event listeners
-    const starEls = document.querySelectorAll('.star');
+    const starEls = document.querySelectorAll('#healthDashboard .star');
     starEls.forEach(el => {
       if (favorites.includes(el.getAttribute('data-id'))) {
         el.classList.add("favorite");
@@ -287,10 +310,11 @@
     {%- if include.dashboard == "favorites" -%}
       showFavorites();
     {%- endif -%}
+    
   }
 
   function showFavorites() {
-    document.querySelectorAll('.star').forEach(el => {
+    document.querySelectorAll('#healthDashboard .star').forEach(el => {
       if (favorites.includes(el.getAttribute('data-id'))) {
         document.getElementById(el.getAttribute('data-id')).classList.remove("d-none");
       } else {
@@ -305,5 +329,5 @@
 {% include components/card-text.html
   title="Health"
   body=content
-  tooltip="The health value is designed to provide a bird's eye view on the general health of each metric in a normalized form."
+  tooltip="The health value is designed to provide a bird’s eye view on the general health of each metric in a normalized form."
 %}
