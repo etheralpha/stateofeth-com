@@ -14,17 +14,16 @@ function enableTooltips() {
   const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 }
 
-
-
-function copyText(el) {
-  console.log("copying...");
-  let copyIconId = el.id;
-  console.log(`\tclicked: ${copyIconId}`);
-  let textToCopyId = el.getAttribute("data-copy");
-  console.log(`\tcopying: ${textToCopyId}`);
+// copy text
+const copyBtns = document.getElementsByClassName("text-copy");
+Array.from(copyBtns).forEach(function(element) {
+  element.addEventListener('click', copyText);
+});
+function copyText() {
+  let copyIconId = this.id;
+  let textToCopyId = this.getAttribute("data-copy");
   const textToCopy = document.getElementById(textToCopyId).innerText;
   // const textToCopy = textToCopyId.setSelectionRange();
-  console.log(`\tcopied content: ${textToCopy}`);
   navigator.clipboard.writeText(textToCopy).then(function() {
     let tooltipElement = document.getElementById(copyIconId);
     let tooltip = bootstrap.Tooltip.getInstance(tooltipElement);

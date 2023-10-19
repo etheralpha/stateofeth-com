@@ -1,3 +1,22 @@
+<style type="text/css">
+  .code-container {
+    position: relative;
+  }
+  .code-container .text-copy {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    color: #fff;
+    padding: 0.5rem;
+    opacity: 0.8;
+  }
+  .code-container .text-copy:active,
+  .code-container .text-copy:focus {
+    padding: 0.475rem;
+    margin-top: 1px;
+  }
+</style>
+
 {%- assign data_id = include.id | append: "Data" -%}
 {%- assign data_folder = include.data.data.data_folder | remove: "site/" | remove: "_data/" | remove: "data/" | split: "/" -%}
 {%- assign data_path = site.data -%}
@@ -17,23 +36,23 @@
 
 {%- capture content -%}
 <div class="mb-3">
-  <div class="input-group">
-    <div class="form-control" aria-label="endpoint" aria-describedby="endpoint">
-      <code>https://stateofeth.com/api/v1/validator-consensus-client-diversity/[data_source].json</code>
-    </div>
-    <span onclick="copyText(this)" 
-          id="{{include.id}}Copy"
-          class="input-group-text bg-dark" 
-          data-copy="{{include.id}}" 
-          data-bs-toggle="tooltip" 
-          data-bs-placement="top" 
-          data-bs-trigger="click" 
-          data-bs-original-title="Copied!">
-      {{site.data.icons.copy}}
-    </span>
+<div class="input-group">
+  <div class="form-control" aria-label="endpoint" aria-describedby="endpoint">
+    <code id="{{include.id}}Endpoint">https://stateofeth.com/api/v1/validator-consensus-client-diversity/[data_source].json</code>
   </div>
-  <div class="form-text">Replace <code>[data_source]</code> with the name of the data source you're interested in: {{data_sources}}</div>
+  <span id="{{include.id}}EndpointCopy"
+        class="input-group-text text-copy bg-dark" 
+        data-copy="{{include.id}}Endpoint" 
+        data-bs-toggle="tooltip" 
+        data-bs-placement="top" 
+        data-bs-trigger="click" 
+        data-bs-original-title="Copied!">
+    {{site.data.icons.copy}}
+  </span>
 </div>
+<div class="form-text">Replace <code>[data_source]</code> with the name of the data source you're interested in: {{data_sources}}</div>
+</div>
+
 
 
 {:class="table mb-3"}
@@ -46,10 +65,22 @@ data      | object | An object containing all the data.
 
 Example response:
 
-<pre id="{{include.id}}"></pre>
+
+<div class="code-container">
+  <pre id="{{include.id}}Code" class="bg-black"></pre>
+  <span id="{{include.id}}CodeCopy"
+        class="input-group-text text-copy bg-dark" 
+        data-copy="{{include.id}}Code" 
+        data-bs-toggle="tooltip" 
+        data-bs-placement="top" 
+        data-bs-trigger="click" 
+        data-bs-original-title="Copied!">
+    {{site.data.icons.copy}}
+  </span>
+</div>
 <script type="text/javascript">
   const {{data_id}} = {{sample_data | jsonify}};
-  document.getElementById("{{include.id}}").textContent = JSON.stringify({{data_id}}, undefined, 2);
+  document.getElementById("{{include.id}}Code").textContent = JSON.stringify({{data_id}}, undefined, 2);
 </script>
 {%- endcapture -%}
 

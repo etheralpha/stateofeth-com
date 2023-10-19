@@ -341,7 +341,10 @@ hr {
   --bs-tooltip-bg: #1d2229;
   --bs-tooltip-color: inherit;
 }
-
+.text-copy:hover {
+  cursor: pointer;
+  opacity: 1;
+}
 
 
 code {

@@ -5,7 +5,7 @@ permalink: /api/v1/documentation
 id: apiV1Documentation
 ---
 
-{% comment %}
+
 {% include components/card-alert.html
   body="The API is still in alpha and under development so endpoints and responses may change or stop working unexpectedly."
   type="danger"
@@ -25,7 +25,7 @@ id: apiV1Documentation
 	title="Introduction"
   body=content
 %}
-{% endcomment %}
+
 
 
 
@@ -37,7 +37,6 @@ Consensus Client Diversity
   id="consensusclientdiversityvalidators"
   title="<code>/metrics/consensus-client-diversity-validators</code>"
   data=site.data.metrics.consensus-client-diversity-validators.content
-  open="true"
 %}
 
 {% include components/details-api.html
