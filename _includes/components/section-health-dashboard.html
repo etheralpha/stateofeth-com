@@ -86,64 +86,119 @@
       </tr>
     </thead>
     <tbody>
-{% for item in site.data.dashboards.health %}
-      <tr id="{{item.id}}">
-        <td class="stars">
-          <span class="star" data-id="{{item.id}}">{{site.data.icons.star_fill}}</span>
-        </td>
-        <td class="category" data-sort="{{item.icon}}">
-          <span class="">{{site.data.icons[item.icon]}}</span>
-        </td>
-        <td class="metric" data-sort="{{item.title}}">
-          {{item.title}}
-        </td>
-        <td class="health" data-sort="{{item.health}}">
-          {%- assign color = "warning" -%}
-          {%- assign state = "Caution" -%}
-          {%- if item.health >= 80 -%}
-            {%- assign color = "success" -%}
-            {%- assign state = "Great" -%}
-          {%- elsif item.health < 50 -%}
-            {%- assign color = "danger" -%}
-            {%- assign state = "Danger" -%}
-          {%- endif -%}
-          <div class="progress position-relative" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-original-title="
-              <div class=&quot;progress-tooltip text-start&quot;>
-                <div class=&quot;mb-1 pb-1 text-center border-bottom border-secondary&quot;>
-                  Status:<br>{{item.health}}% ({{state}})
-                </div>
-                <div class=&quot;d-flex justify-content-between&quot;>
-                  <span class=&quot;me-2&quot;>Danger:</span><span>0-50%</span>
-                </div>
-                <div class=&quot;d-flex justify-content-between&quot;>
-                  <span class=&quot;me-2&quot;>Caution:</span><span>50-80%</span>
-                </div>
-                <div class=&quot;d-flex justify-content-between mb-1 pb-1 border-bottom border-secondary&quot;>
-                <span class=&quot;me-2&quot;>Great:</span><span>80-100%</span>
-                </div>
-                <div>Go to View Details > Health to see how this is calculated.</div>
-              </div>">
-            <div class="progress-bar position-absolute bg-{{color}}" role="progressbar" style="width: {{item.health}}%;" aria-valuenow="{{item.health}}" aria-valuemin="0" aria-valuemax="100"></div>
-            <div class="progress-bar bg-trans progress-danger" role="progressbar" style="width: 50%;"></div>
-            <div class="progress-bar bg-trans progress-warning" role="progressbar" style="width: 30%;"></div>
-            <div class="progress-bar bg-trans progress-success" role="progressbar" style="width: 20%;"></div>
-          </div>
-        </td>
-        {%- assign disabled = "" -%}
-        {%- assign btn_color = "primary" -%}
-        {%- if item.disabled -%}
-          {%- assign disabled = "disabled" -%}
-          {%- assign btn_color = "outline-secondary" -%}
-        {%- endif -%}
-        <td class="details">
-          {%- if item.link -%}
-            <a href="{{item.link}}" class="btn btn-sm btn-{{btn_color}} {{disabled}}">View Details</a>
+      {% for item in site.data.dashboards.health %}
+        {%- assign title = item.title -%}
+        {%- assign link = item.link -%}
+        {%- assign page_info = site.pages | where: 'id', item.id | first -%}
+        {%- if page_info -%}
+          {%- if page_info.health_title -%}
+            {%- assign title = page_info.health_title -%}
           {%- else -%}
-            no details
+            {%- assign title = page_info.title -%}
           {%- endif -%}
-        </td>
-      </tr>
-{% endfor %}
+          {%- if page_info.permalink -%}
+            {%- assign link = page_info.permalink -%}
+          {%- else -%}
+            {%- assign link = page_info.url -%}
+          {%- endif -%}
+        {%- endif -%}
+        <tr id="{{item.id}}">
+          <td class="stars">
+            <span class="star" data-id="{{item.id}}">{{site.data.icons.star_fill}}</span>
+          </td>
+          <td class="category" data-sort="{{item.icon}}">
+            <span class="">{{site.data.icons[item.icon]}}</span>
+          </td>
+          <td class="metric" data-sort="{{title}}">
+            {%- capture badge -%}
+              <span class="badge border border-secondary text-secondary ms-0">SOON™</span>
+            {%- endcapture -%}
+            {%- assign color = "text-secondary" -%}
+            {%- if item.health or link -%}
+              {%- assign badge = "" -%}
+              {%- assign color = "" -%}
+            {%- endif -%}
+            {%- if item.disabled -%}
+              {%- assign badge = "" -%}
+              {%- assign color = "" -%}
+            {%- endif -%}
+            <div class="{{color}}">
+              {{badge}}
+              {{title}}
+            </div>
+          </td>
+          <td class="health" data-sort="{{item.health}}">
+            {%- if item.health and item.disabled != true -%}
+              {%- assign color = "warning" -%}
+              {%- assign state = "Caution" -%}
+              {%- if item.health >= 80 -%}
+                {%- assign color = "success" -%}
+                {%- assign state = "Great" -%}
+              {%- elsif item.health < 50 -%}
+                {%- assign color = "danger" -%}
+                {%- assign state = "Danger" -%}
+              {%- endif -%}
+              <div class="progress position-relative" 
+                data-bs-toggle="tooltip" 
+                data-bs-placement="top" 
+                data-bs-html="true"
+                data-bs-original-title="
+                  <div class=&quot;progress-tooltip text-start&quot;>
+                    <div class=&quot;mb-1 pb-1 text-center border-bottom border-secondary&quot;>
+                      Status:<br>{{item.health}}% ({{state}})
+                    </div>
+                    <div class=&quot;d-flex justify-content-between&quot;>
+                      <span class=&quot;me-2&quot;>Danger:</span><span>0-50%</span>
+                    </div>
+                    <div class=&quot;d-flex justify-content-between&quot;>
+                      <span class=&quot;me-2&quot;>Caution:</span><span>50-80%</span>
+                    </div>
+                    <div class=&quot;d-flex justify-content-between mb-1 pb-1 border-bottom border-secondary&quot;>
+                    <span class=&quot;me-2&quot;>Great:</span><span>80-100%</span>
+                    </div>
+                    <div>Go to View Details > Health to see how this is calculated.</div>
+                  </div>">
+                <div class="progress-bar position-absolute bg-{{color}}" role="progressbar" style="width: {{item.health}}%;" aria-valuenow="{{item.health}}" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-trans progress-danger" role="progressbar" style="width: 50%;"></div>
+                <div class="progress-bar bg-trans progress-warning" role="progressbar" style="width: 30%;"></div>
+                <div class="progress-bar bg-trans progress-success" role="progressbar" style="width: 20%;"></div>
+              </div>
+            {%- else -%}
+              <div class="progress pending position-relative" 
+                data-bs-toggle="tooltip" 
+                data-bs-placement="top" 
+                data-bs-html="true" 
+                data-bs-original-title="
+                  <div class=&quot;progress-tooltip text-start&quot;>
+                    <div>Data for this metric has not been integrated yet.</div>
+                  </div>">
+                <div class="progress-bar bg-trans progress-pending" role="progressbar" style="width: 100%;"></div>
+              </div>
+            {%- endif -%}
+          </td>
+          {%- assign disabled = "" -%}
+          {%- assign btn_color = "primary" -%}
+          {%- assign tooltip = "" -%}
+          {%- unless link and item.disabled != true -%}
+            {%- assign disabled = "disabled" -%}
+            {%- assign btn_color = "outline-secondary" -%}
+            {%- capture tooltip -%}
+              data-bs-toggle="tooltip" 
+              data-bs-placement="top" 
+              data-bs-html="true" 
+              data-bs-original-title="
+                <div class='progress-tooltip text-start'>
+                  <div>A page for this metric has not been created yet.</div>
+                </div>"
+            {%- endcapture -%}
+          {%- endunless -%}
+          <td class="details">
+            <div {{tooltip}}>
+              <a href="{{link}}" class="btn btn-sm btn-{{btn_color}} {{disabled}}">View Details</a>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>
@@ -211,6 +266,10 @@
       // update table with sorted rows
       table.replaceChildren(...originalRows);
     } else {
+      // remove items with no health value before sorting
+      rows = rows.filter(function(item) {
+        return item.querySelector(`td:nth-child(4)`).getAttribute('data-sort') != "";
+      })
       rows.sort( (r1,r2) => {
         // get each row's column and sorting content
         let t1 = r1.querySelector(`td:nth-child(${colNum})`).getAttribute('data-sort');

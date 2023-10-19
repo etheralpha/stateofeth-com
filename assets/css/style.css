@@ -44,6 +44,25 @@ main {
     padding: 0.75rem;
   }
 }
+aside {
+  min-height: 100vh;
+  max-height: 100vh;
+  /*width: 220px;*/
+  /*min-width: 220px;*/
+  width: 275px;
+  min-width: 275px;
+  /*padding: 1.5rem;*/
+  padding: 1.25rem;
+  padding-right: 0;
+  overflow-y: scroll;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+
+  font-size: 0.85rem;
+}
+aside::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
 
 .bg-body-tertiary {
   /*--bs-bg-opacity: 0.1;*/
@@ -57,7 +76,7 @@ main {
 
 .card {
   background-color: var(--bs-tertiary-bg);
-  border: 1px solid rgb(64, 68, 79);
+  /*border: 1px solid rgb(64, 68, 79);*/
   border: 1px solid var(--bs-border-color);
   /*margin-bottom: 2.15rem;*/
   margin-bottom: 1.75rem;
@@ -155,10 +174,6 @@ btn-check:checked+.btn,
 .alert a {
   color: inherit;
 }
-.alert.main-alert {
-  margin-top: -0.75rem; /* only for one one top of page */
-  margin-bottom: 1.75rem; /* only for one one top of page */
-}
 
 
 ol, ul {
@@ -214,6 +229,7 @@ summary.disabled {
 
 
 .card .table {
+  --bs-table-bg: transparent;
   margin-bottom: 0;
 }
 .table>:not(caption)>*>* {
@@ -270,6 +286,10 @@ select.form-select:focus {
   border: var(--bs-border-width) solid var(--bs-border-color);
   box-shadow: none;
 }
+.form-control {
+  font-size: var(--bs-btn-font-size);
+  background-color: var(--bs-tertiary-bg);
+}
 
 
 hr {
@@ -278,10 +298,12 @@ hr {
 
 
 
-
 .progress,
 .progress-stacked {
   --bs-progress-height: 0.5rem;
+}
+.progress.pending {
+  opacity: 20%;
 }
 .progress-bar {
   height: 100%;
@@ -291,21 +313,25 @@ hr {
   margin-right: 1em;
 }
 .progress-success {
-  /*background-image: linear-gradient(45deg,rgba(25,135,84,.15) 25%,transparent 25%,transparent 50%,rgba(25,135,84,.15) 50%,rgba(25,135,84,.15) 75%,transparent 75%,transparent);*/
-  background-image: linear-gradient(45deg,rgba(var(--bs-success-rgb),.15) 25%,transparent 25%,transparent 50%,rgba(var(--bs-success-rgb),.15) 50%,rgba(var(--bs-success-rgb),.15) 75%,transparent 75%,transparent);
+  --progress-success-color: rgba(var(--bs-success-rgb), 15%);
+  background-image: linear-gradient(45deg,var(--progress-success-color) 25%,transparent 25%,transparent 50%,var(--progress-success-color) 50%,var(--progress-success-color) 75%,transparent 75%,transparent);
   background-size: 1rem 1rem;
 }
 .progress-warning {
-  /*background-image: linear-gradient(45deg,rgba(255,193,7,.15) 25%,transparent 25%,transparent 50%,rgba(255,193,7,.15) 50%,rgba(255,193,7,.15) 75%,transparent 75%,transparent);*/
-  background-image: linear-gradient(45deg,rgba(var(--bs-warning-rgb),.15) 25%,transparent 25%,transparent 50%,rgba(var(--bs-warning-rgb),.15) 50%,rgba(var(--bs-warning-rgb),.15) 75%,transparent 75%,transparent);
+  --progress-warning-color: rgba(var(--bs-warning-rgb), 15%);
+  background-image: linear-gradient(45deg,var(--progress-warning-color) 25%,transparent 25%,transparent 50%,var(--progress-warning-color) 50%,var(--progress-warning-color) 75%,transparent 75%,transparent);
   background-size: 1rem 1rem;
 }
 .progress-danger {
-  /*background-image: linear-gradient(45deg,rgba(220,53,69,.15) 25%,transparent 25%,transparent 50%,rgba(220,53,69,.15) 50%,rgba(220,53,69,.15) 75%,transparent 75%,transparent);*/
-  background-image: linear-gradient(45deg,rgba(var(--bs-danger-rgb),.15) 25%,transparent 25%,transparent 50%,rgba(var(--bs-danger-rgb),.15) 50%,rgba(var(--bs-danger-rgb),.15) 75%,transparent 75%,transparent);
+  --progress-danger-color: rgba(var(--bs-danger-rgb), 15%);
+  background-image: linear-gradient(45deg,var(--progress-danger-color) 25%,transparent 25%,transparent 50%,var(--progress-danger-color) 50%,var(--progress-danger-color) 75%,transparent 75%,transparent);
   background-size: 1rem 1rem;
 }
-
+.progress-pending {
+  --progress-pending-color: rgb(255 255 255 / 38%);
+  background-image: linear-gradient(45deg,var(--progress-pending-color) 25%,transparent 25%,transparent 50%,var(--progress-pending-color) 50%,var(--progress-pending-color) 75%,transparent 75%,transparent);
+  background-size: 1rem 1rem;
+}
 
 
 
@@ -318,9 +344,22 @@ hr {
 
 
 
-
-
-
+code {
+  color: #c2c2c2;
+}
+pre {
+  max-height: 300px;
+  background-color: var(--bs-tertiary-bg);
+  border-radius: var(--bs-border-radius);
+  border: 1px solid;
+  border-color: var(--bs-border-color);
+  padding: 1rem;
+}
+@media only screen and (max-width: 575px) {
+  pre {
+    max-height: 200px;
+  }
+}
 
 
 

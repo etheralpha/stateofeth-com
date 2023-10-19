@@ -1,3 +1,15 @@
+{%- comment -%}
+<!-- 
+{% include components/card-list.html
+  title=""
+  body=""
+  lists=""
+  button_link=""
+  button_text=""
+%}
+-->
+{%- endcomment -%}
+
 {%- assign id = "" | append: include.title -%}
 <div class="card" id='{{id | anchor | remove: "#"}}'>
   <div class="card-body">

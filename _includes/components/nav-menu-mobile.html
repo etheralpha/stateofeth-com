@@ -1,0 +1,39 @@
+<style type="text/css">
+  #mobileNavHeader {
+    background-color: var(--bs-tertiary-bg);
+    border-bottom: 1px solid var(--bs-border-color);
+    padding: 0.4rem;
+  }
+  #mobileNavHeader .menu-brand a {
+    text-decoration: none;
+  }
+  #mobileNavHeader .menu-brand img {
+    height: 1.7rem;
+    margin-top: -10px;
+  }
+  .offcanvas {
+    --bs-offcanvas-width: 310px;
+  }
+</style>
+
+
+<div id="mobileNavHeader" class="d-lg-none d-flex justify-content-between" 
+    data-bs-toggle="offcanvas" 
+    data-bs-target="#mobileNav" 
+    aria-controls="mobileNav">
+  <div class="menu-brand d-inline p-1 ms-sm-3">
+    <a href="/" class="link-light fw-bold lead">
+      <img class="me-1 fs-3" src="/assets/img/logo/logo-md.png" alt="🌡️"> 
+      State of Eth
+    </a>
+  </div>
+  <div class="d-inline p-2 me-sm-3">Menu</div>
+</div>
+<div class="offcanvas offcanvas-start" tabindex="-1" id="mobileNav">
+  <div class="offcanvas-header">
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    {%- include components/nav-menu.html -%}
+  </div>
+</div>

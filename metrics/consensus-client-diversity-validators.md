@@ -1,7 +1,10 @@
 ---
 layout: default
-title: Consensus Client Diversity (Validators)
+title: Validator Consensus Client Diversity
+menu_title: Validator Client Diversity
+health_title: Validator Consensus Client Diversity
 permalink: /metrics/consensus-client-diversity-validators
+id: validatorConsensusClientDiversity
 ---
 
 

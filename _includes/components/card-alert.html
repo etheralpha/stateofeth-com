@@ -1,3 +1,12 @@
+{%- comment -%}
+<!-- 
+{% include components/card-alert.html
+  body=""
+  type="info|primary|secondary|success|danger|warning|light|dark"
+%}
+-->
+{%- endcomment -%}
+
 {%- assign type = "alert-info" -%}
 {%- assign icon = "" -%}
 {%- if include.type == "primary" -%}
@@ -37,6 +46,8 @@
 {%- if include.body -%}
   <div class="alert {{type}} d-flex" role="alert">
     {{icon}}
-    {{include.body | markdownify}}
+    <div>
+      {{include.body | markdownify}}
+    </div>
   </div>
 {%- endif -%}

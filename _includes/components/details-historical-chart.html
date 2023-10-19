@@ -1,9 +1,20 @@
+{%- comment -%}
+<!-- 
+{% include components/details-historical-chart.html
+  chart_id=""
+  data=""
+  data_obj_key=""
+  data_attribute=""
+%}
+-->
+{%- endcomment -%}
+
 {%- capture content -%}
   {% include components/data-line-chart.html
     chart_id=include.chart_id
     data=include.data
-    data_attribute=include.data_attribute
     data_obj_key=include.data_obj_key
+    data_attribute=include.data_attribute
   %}
 {%- endcapture -%}
 

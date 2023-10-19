@@ -29,14 +29,9 @@
 # Entries are shown in the order listed
 - category: Dashboards
   items:
-    - link: /dashboards/overview
-      title: Overview
-      # label: Soon™
-      # disabled: true
-    - link: /dashboards/watchlist
-      title: Watchlist
+    - id: dashboardOverview
+    - id: dashboardWatchlist
       label: new
-#       disabled: true
 - category: Metrics
   items:
     - subcategory: Consensus Client Diversity
@@ -46,8 +41,7 @@
           title: Node Client Diversity
           label: Soon™
           disabled: true
-        - link: /metrics/consensus-client-diversity-validators
-          title: Validator Client Diversity
+        - id: validatorConsensusClientDiversity
         - link: /metrics/consensus-client-count
           title: Client Count
           label: Soon™
@@ -100,25 +94,13 @@
       disabled: true
 - category: Tools
   items:
-    - link: /api/documentation
-      title: API
-      icon: code
-      # label: Alpha
-      label: Soon™
-      disabled: true
+    - id: apiV1Documentation
+      label: Alpha
 - category: General
   items:
-    - link: /about
-      title: About / Contact
-    - link: /newsletter
-      title: Newsletter
-      new_tab: true
-    - link: /twitter
-      title: Twitter
-      new_tab: true
-    - link: /github
-      title: Github
-      new_tab: true
-    - link: /donate
-      title: Donate
+    - id: about
+    - id: newsletter
+    - id: twitter
+    - id: github
+    - id: donate
 

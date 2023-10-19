@@ -1,3 +1,14 @@
+{%- comment -%}
+<!-- 
+{% include components/data-progress-bars.html
+  data=""
+  danger_start=""
+  success_end=""
+  data_attribute=""
+%}
+-->
+{%- endcomment -%}
+
 {%- assign all_data = include.data -%}
 {%- assign spot_data = all_data | last -%}
 {%- assign data = spot_data.data.distribution -%}
@@ -77,7 +88,8 @@
     const currentTimestamp = Math.round(Date.now()/10000)*10;
     const delta = currentTimestamp - updatedTimestamp;
     const detltHours = Math.round(delta/3600);
-    const lastUpdated = ` — last updated ${detltHours}hrs ago`;
+    let lastUpdated = ` — last updated ${detltHours}hrs ago`;
+    // lastUpdated += " (updated daily)"
     document.querySelector('.last-updated').innerText = lastUpdated;
   }
   populateLastUpdated({{spot_data.timestamp}});

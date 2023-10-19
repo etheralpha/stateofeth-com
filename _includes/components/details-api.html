@@ -1,0 +1,63 @@
+{%- assign data_id = include.id | append: "Data" -%}
+{%- assign data_folder = include.data.data.data_folder | remove: "site/" | remove: "_data/" | remove: "data/" | split: "/" -%}
+{%- assign data_path = site.data -%}
+{%- for item in data_folder -%}
+  {%- assign data_path = data_path[item] -%}
+{%- endfor -%}
+{%- assign dataset = include.data.data.datasets | first -%}
+{%- assign sample_data = data_path[dataset.data_file_name] | last -%}
+
+{%- assign data_sources = "" -%}
+{%- for item in include.data.data.datasets -%}
+  {%- assign data_sources = data_sources | append: item["data_source"] -%}
+  {%- unless forloop.last -%}
+    {%- assign data_sources = data_sources | append: ", " -%}
+  {%- endunless -%}
+{%- endfor -%}
+
+{%- capture content -%}
+<div class="mb-3">
+  <div class="input-group">
+    <div class="form-control" aria-label="endpoint" aria-describedby="endpoint">
+      <code>https://stateofeth.com/api/v1/validator-consensus-client-diversity/[data_source].json</code>
+    </div>
+    <span onclick="copyText(this)" 
+          id="{{include.id}}Copy"
+          class="input-group-text bg-dark" 
+          data-copy="{{include.id}}" 
+          data-bs-toggle="tooltip" 
+          data-bs-placement="top" 
+          data-bs-trigger="click" 
+          data-bs-original-title="Copied!">
+      {{site.data.icons.copy}}
+    </span>
+  </div>
+  <div class="form-text">Replace <code>[data_source]</code> with the name of the data source you're interested in: {{data_sources}}</div>
+</div>
+
+
+{:class="table mb-3"}
+Key       | Type   | Description
+----------|--------|--------------------------
+date      | string | The date in yyyy-mm-dd format of when the data was updated.
+timestamp | int    | The Unix timestamp of when the data was updated.
+data      | object | An object containing all the data.
+
+
+Example response:
+
+<pre id="{{include.id}}"></pre>
+<script type="text/javascript">
+  const {{data_id}} = {{sample_data | jsonify}};
+  document.getElementById("{{include.id}}").textContent = JSON.stringify({{data_id}}, undefined, 2);
+</script>
+{%- endcapture -%}
+
+
+{% include components/details.html
+  title=include.title
+  body=content
+  open=include.open
+%}
+
+

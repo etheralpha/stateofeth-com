@@ -1,7 +1,9 @@
 ---
 layout: default
 title: About
+menu_title: About / Contact
 permalink: /about
+id: about
 ---
 
 

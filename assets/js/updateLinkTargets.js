@@ -28,7 +28,7 @@ function updateLinkTargets() {
     }
     // if new-tab class, use new tab
     if (link.classList.contains("new-tab")) {
-      link.target = "_self";
+      link.target = "_blank";
     }
   })
 }

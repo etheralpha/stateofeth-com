@@ -2,6 +2,7 @@
 layout: default
 title: Watchlist
 permalink: /dashboards/watchlist
+id: dashboardWatchlist
 ---
 
 
