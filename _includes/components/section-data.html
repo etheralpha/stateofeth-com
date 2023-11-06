@@ -1,0 +1,60 @@
+{%- assign metric_id = page.id -%}
+{%- assign data_folder = include.data.data.data_folder | remove: "site/" | remove: "_data/" | remove: "data/" | split: "/" -%}
+{%- assign data_path = site.data -%}
+{%- for item in data_folder -%}
+  {%- assign data_path = data_path[item] -%}
+{%- endfor -%}
+
+
+{%- capture content -%}
+  {% include components/select-data-source.html
+    metric_id=metric_id
+    data=include.data
+  %}
+
+  {%- for dataset in include.data.data.datasets -%}
+    {%- assign chart_id = metric_id | append: dataset.data_source -%}
+
+    {%- assign visibility = "" -%}
+    {%- if forloop.index > 1 -%}
+      {%- assign visibility = "d-none" -%}
+    {%- endif -%}
+
+<div class="dataset {{dataset.data_id}} {{visibility}}">
+  {%- assign data = data_path[dataset.data_file_name] -%}
+  {% include components/data-progress-bars.html
+    data=data
+    data_source=dataset.data_source
+    success_end=include.data.data.data_limits.success_end
+    danger_start=include.data.data.data_limits.danger_start
+    data_attribute=dataset.data_attribute
+  %}
+
+  {%- assign data = data_path[dataset.data_file_name] -%}
+  {%- if dataset.historical_chart -%}
+    {% include components/details-historical-chart.html
+      chart_id=chart_id
+      data=data
+      data_attribute=dataset.data_attribute
+      data_obj_key=dataset.data_obj_key
+    %}
+  {%- else -%}
+    {% include components/details.html
+      title="Historical Data (Unavailable)"
+      disabled=true
+    %}
+  {%- endif -%}
+
+  {% include components/details-data-methodology.html
+    data_attribute=dataset.data_attribute
+    data_methodology=dataset.data_methodology
+  %}
+</div>
+  {%- endfor -%}
+{%- endcapture -%}
+
+
+{% include components/card-text.html
+  title="Data"
+  body=content
+%}

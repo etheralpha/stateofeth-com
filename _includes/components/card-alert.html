@@ -1,0 +1,53 @@
+{%- comment -%}
+<!-- 
+{% include components/card-alert.html
+  body=""
+  type="info|primary|secondary|success|danger|warning|light|dark"
+%}
+-->
+{%- endcomment -%}
+
+{%- assign type = "alert-info" -%}
+{%- assign icon = "" -%}
+{%- if include.type == "primary" -%}
+  {%- assign type = "alert-primary" -%}
+  {%- assign icon = site.data.icons.info_circle_fill -%}
+{%- endif -%}
+{%- if include.type == "secondary" -%}
+  {%- assign type = "alert-secondary" -%}
+{%- endif -%}
+{%- if include.type == "success" -%}
+  {%- assign type = "alert-success" -%}
+  {%- assign icon = site.data.icons.check_circle_fill -%}
+{%- endif -%}
+{%- if include.type == "danger" -%}
+  {%- assign type = "alert-danger" -%}
+  {%- assign icon = site.data.icons.exclamation_triangle_fill -%}
+{%- endif -%}
+{%- if include.type == "warning" -%}
+  {%- assign type = "alert-warning" -%}
+  {%- assign icon = site.data.icons.exclamation_triangle_fill -%}
+{%- endif -%}
+{%- if include.type == "info" -%}
+  {%- assign type = "alert-info" -%}
+  {%- assign icon = site.data.icons.info_circle_fill -%}
+{%- endif -%}
+{%- if include.type == "light" -%}
+  {%- assign type = "alert-light" -%}
+{%- endif -%}
+{%- if include.type == "dark" -%}
+  {%- assign type = "alert-dark" -%}
+{%- endif -%}
+
+{%- if include.icon == false -%}
+  {%- assign icon = "" -%}
+{%- endif -%}
+
+{%- if include.body -%}
+  <div class="alert {{type}} d-flex" role="alert">
+    {{icon}}
+    <div>
+      {{include.body | markdownify}}
+    </div>
+  </div>
+{%- endif -%}

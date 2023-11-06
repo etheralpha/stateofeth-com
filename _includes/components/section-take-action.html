@@ -1,0 +1,24 @@
+{%- capture content -%}
+  {%- for item in include.data.take_action -%}
+    {%- if item.content contains "partials/metrics" -%}
+      {%- capture include_content -%}
+        {%- include {{item.content}} -%}
+      {%- endcapture -%}
+      {% include components/details.html
+        title=item.title
+        body=include_content
+      %}
+    {%- else -%}
+      {% include components/details.html
+        title=item.title
+        body=item.content
+      %}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+
+{% include components/card-text.html
+  title="Take Action!"
+  body=content
+%}

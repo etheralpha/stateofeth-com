@@ -1,0 +1,17 @@
+{%- assign metric_id = include.metric_id -%}
+{%- assign data = include.data -%}
+<div class="data-source-select pb-2">
+  <select id="{{metric_id}}Select" 
+        class="form-select w-auto" 
+        aria-label="Select data source" 
+        onchange="updateDataSource(this)">
+    <option value="none" selected="" disabled="">Select data source</option>
+    {%- for dataset in include.data.data.datasets -%}
+      {%- assign default = "" -%}
+      {%- if forloop.index == 1 -%}
+        {%- assign default = " (default)" -%}
+      {%- endif -%}
+      <option value="{{dataset.data_id}}">{{dataset.data_source}}{{default}}</option>
+    {%- endfor -%}
+  </select>
+</div>

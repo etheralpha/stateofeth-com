@@ -1,0 +1,106 @@
+## category      = category name
+## label         = (optional) category label
+## disabled      = (optional) true/false
+## items         = list of items in the category
+##   subcategory = subcategory name
+##   subitems    = list of items in the subcategory
+##     link      = subcategory item permalink
+##     title     = subcategory item title
+##     new_tab   = (optional) true/false; open in new tab or not
+##     label     = (optional) subcategory item label
+##     disabled  = (optional) true/false
+##   link        = category item link
+##   title       = category item title
+##   new_tab     = (optional) true/false; open in new tab or not
+##   label       = (optional) category item label
+##   disabled    = (optional) true/false
+
+# Template to copy for new entries
+# - category: 
+#   items:
+#     - subcategory: 
+#       sub_items:
+#         - link: 
+#           title: 
+#     - link: 
+#       title: 
+
+
+# Entries are shown in the order listed
+- category: Dashboards
+  items:
+    - id: dashboardOverview
+    - id: dashboardWatchlist
+      label: new
+- category: Metrics
+  items:
+    - subcategory: Consensus Client Diversity
+      icon: window_sidebar
+      sub_items:
+        - link: /metrics/consensus-client-diversity-nodes
+          title: Node Client Diversity
+          label: Soon™
+          disabled: true
+        - id: validatorConsensusClientDiversity
+        - link: /metrics/consensus-client-count
+          title: Client Count
+          label: Soon™
+          disabled: true
+        - link: /metrics/consensus-client-count
+          title: Client Languages
+          label: Soon™
+          disabled: true
+    - subcategory: Execution Client Diversity
+      icon: window_split
+      label: Soon™
+      disabled: true
+      sub_items:
+        - link: /metrics/execution-client-diversity-nodes
+          title: Node Client Diversity
+        - link: /metrics/execution-client-diversity-validators
+          title: Validator Client Diversity
+        - link: /metrics/execution-client-count
+          title: Client Count
+        - link: /metrics/execution-client-count
+          title: Client Languages
+    - subcategory: Staking Diversity
+      icon: people
+      label: Soon™
+      disabled: true
+      sub_items:
+        - link: /metrics/entity-staking-diversity
+          title: Entities
+          label: Soon™
+          disabled: true
+        - link: /metrics/lst-staking-diversity
+          title: LSTs / Pools
+    - subcategory: Geographic Diversity
+      icon: globe
+      label: Soon™
+      disabled: true
+      sub_items:
+        - link: /metrics/geographic-diversity-nodes
+          title: Nodes
+          label: Soon™
+          disabled: true
+        - link: /metrics/geographic-diversity-validators
+          title: Validators
+          label: Soon™
+          disabled: true
+    - link: /metrics/node-count
+      title: Node Count
+      icon: plugin
+      label: Soon™
+      disabled: true
+- category: Tools
+  items:
+    - id: apiV1Documentation
+      label: Alpha
+- category: General
+  items:
+    - id: about
+    - id: newsletter
+    - id: twitter
+    - id: github
+    - id: donate
+

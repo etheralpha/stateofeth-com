@@ -1,0 +1,21 @@
+{%- capture content -%}
+  <div class="row gx-5">
+    {%- for list in include.data.resources -%}
+      <div class="col mb-2">
+        {%- capture resource_list -%}
+**{{list.category}}**
+{% for item in list.links %}
+  - [{{item.title}}]({{item.link}})
+{%- endfor -%}
+        {%- endcapture -%}
+        {{resource_list | markdownify}}
+      </div>
+    {%- endfor -%}
+  </div>
+{%- endcapture -%}
+
+
+{% include components/card-text.html
+  title="Resources"
+  body=content
+%}

@@ -1,0 +1,96 @@
+{%- comment -%}
+<!-- 
+{% include components/data-progress-bars.html
+  data=""
+  danger_start=""
+  success_end=""
+  data_attribute=""
+%}
+-->
+{%- endcomment -%}
+
+{%- assign all_data = include.data -%}
+{%- assign spot_data = all_data | last -%}
+{%- assign data = spot_data.data.distribution -%}
+
+
+<div>
+  {%- for item in data -%}
+    {%- assign name = item.name | capitalize -%}
+    {%- assign value = item.value | times: 100 | round: 2 -%}
+    {%- assign accuracy = "no data" -%}
+    {%- if item.accuracy != "no data" -%}
+      {%- assign accuracy = item.accuracy | times: 100 | round: 1 | append: "%" -%}
+    {%- endif -%}
+
+    {%- capture accuracy_tooltip -%}
+      <div class="d-flex justify-content-between">
+        <span class="me-2">accuracy:</span><span>{{accuracy}}</span>
+      </div>
+    {%- endcapture -%}
+    {%- if item.accuracy -%}
+      {%- assign accuracy_tooltip = "" -%}
+    {%- endif -%}
+
+    {%- assign color = "success" -%}
+    {%- assign status = "great!" -%}
+    {%- if value > include.danger_start -%}
+      {%- assign color = "danger" -%}
+      {%- assign status = "danger!" -%}
+    {%- elsif value > include.success_end -%}
+      {%- assign color = "warning" -%}
+      {%- assign status = "caution" -%}
+    {%- endif -%}
+
+    {%- assign success_width = include.success_end -%}
+    {%- assign danger_width = 100 | minus: include.danger_start -%}
+    {%- assign warning_width = 100 | minus: success_width | minus: danger_width -%}
+
+
+    <div class="my-2">
+      <label class="form-label my-0 py-0">{{name}} - {{value}}%</label>
+      <div class="progress position-relative" 
+          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title='
+              <div class="progress-tooltip text-capitalize text-start">
+                <div class="mb-1 pb-1 text-center border-bottom border-secondary">
+                  {{name}} Status:<br>{{value}}% ({{status}})
+                </div>
+                <div class="d-flex justify-content-between">
+                  <span class="me-2">Great:</span><span>0-{{include.success_end}}%</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <span class="me-2">Caution:</span><span>{{include.success_end}}-{{include.danger_start}}%</span>
+                </div>
+                <div class="d-flex justify-content-between mb-1 pb-1 border-bottom border-secondary">
+                <span class="me-2">Danger:</span><span>{{include.danger_start}}-100%</span>
+                </div>
+                {{accuracy_tooltip}}
+              </div>'>
+        <div class="progress-bar position-absolute bg-{{color}}" role="progressbar" style="width: {{value}}%;" aria-valuenow="{{value}}" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-bar bg-trans progress-success" role="progressbar" style="width: {{success_width}}%;"></div>
+        <div class="progress-bar bg-trans progress-warning" role="progressbar" style="width: {{warning_width}}%;"></div>
+        <div class="progress-bar bg-trans progress-danger" role="progressbar" style="width: {{danger_width}}%;"></div>
+      </div>
+    </div>
+  {%- endfor -%}
+</div>
+
+
+{%- if include.data_attribute -%}
+  <p class="fst-italic">
+    <small>{{include.data_attribute | markdownify | remove: "<p>" | remove: "</p>" | remove: "."}}<span class="last-updated"></span></small>
+  </p>
+{%- endif -%}
+
+
+<script type="text/javascript">
+  function populateLastUpdated(updatedTimestamp) {
+    const currentTimestamp = Math.round(Date.now()/10000)*10;
+    const delta = currentTimestamp - updatedTimestamp;
+    const detltHours = Math.round(delta/3600);
+    let lastUpdated = ` — last updated ${detltHours}hrs ago`;
+    // lastUpdated += " (updated daily)"
+    document.querySelector('.last-updated').innerText = lastUpdated;
+  }
+  populateLastUpdated({{spot_data.timestamp}});
+</script>

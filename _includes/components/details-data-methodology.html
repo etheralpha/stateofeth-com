@@ -1,0 +1,17 @@
+{%- comment -%}
+<!-- 
+{% include components/details-data-methodology.html
+  data_attribute=""
+%}
+-->
+{%- endcomment -%}
+
+{%- capture content -%}
+  {{include.data_attribute | markdownify | append: include.data_methodology }}
+{%- endcapture -%}
+
+
+{% include components/details.html
+  title="Data Source & Methodology"
+  body=content
+%}

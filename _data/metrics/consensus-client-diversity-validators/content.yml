@@ -1,0 +1,107 @@
+toc:
+  - Data
+  - Risks
+  - Take Action
+  - Client Info
+  - Resources
+description: This metric covers the marketshare and diversity of consensus layer clients across the network’s validator set.
+health_methodology: |
+  For this metric it is calculated by taking the blah blah blah.
+data:
+  data_limits:
+    success_end: 33
+    danger_start: 50
+    max_value: 100
+  data_folder: metrics/consensus-client-diversity-validators
+  datasets:
+    - data_id: blockprint
+      data_file_name: blockprint
+      data_source: blockprint
+      data_attribute: |
+        Data provided by [Sigma Prime's Blockprint](https://blockprint.sigp.io/).
+      data_methodology: |
+        Blockprint analyzes each client’s block proposal style as described in [this Twitter thread](https://twitter.com/sproulM_/status/1440512518242197516) ([Nitter](https://nitter.snopyta.org/sproulM_/status/1440512518242197516)).
+      historical_chart: true
+      data_obj_key: "distribution"
+    - data_id: blockprint2
+      data_file_name: blockprint
+      data_source: blockprint2
+      data_attribute: |
+        Data provided by [Sigma Prime's Blockprint2](https://blockprint.sigp.io/)
+      data_methodology: |
+        Blockprint2 analyzes each client’s block proposal style as described in [this Twitter thread](https://twitter.com/sproulM_/status/1440512518242197516) ([Nitter](https://nitter.snopyta.org/sproulM_/status/1440512518242197516)).
+      historical_chart: false
+risks: |
+  Validator client diversity is critical for network resiliency. If a single client is used by 2/3rds (66%) of validators, there's a very real risk this can result in disrupting the chain and monetary loss \[[1](https://www.slashed.info/), [2](https://nitter.net/_crypto_crack/status/1504459918539120643)] for node operators.
+
+  It takes 2/3rds of validators to reach finality. If a client with 66%+ of marketshare has a bug and forks to its own chain, it'll be capable of finalizing. Once the fork finalizes, the **validators cannot return to the real chain without being slashed**. If 66% of the chain gets slashed simultaneously, the penalty is the whole 32 ETH.
+
+  So why is >50% marketshare still dangerous? If a minority client forks, the 50%+ majority client can obtain a 66%+ majority. With no client having a marketshare over 33%, these scenarios are avoided. That's why **<33% marketshare is the goal for all clients**.
+take_action:
+  - title: Node Operators - Manual Client Migration Guides
+    content: partials/metrics/consensus-client-diversity-validators/take-action/client-migration-manual.html
+  - title: Liquid Stakers - Use LST With Diverse Clients
+    content: |
+      [Use a staking pool](https://www.rated.network/?network=mainnet&view=pool&timeWindow=1d&page=1&poolType=all) that has better consensus client distribution, but a network penetration less than 22%.
+further_reading:
+  - title: "Client Diversity On Ethereum’s Consensus Layer"
+    link: "https://mirror.xyz/jmcook.eth/S7ONEka_0RgtKTZ3-dakPmAHQNPvuj15nh0YGKPFriA"
+  - title: "Prysm: Statement On Client Diversity"
+    link: "https://medium.com/prysmatic-labs/prysmatic-labs-statement-on-client-diversity-c0e3c2f05671"
+  - title: "Nimbus: The Importance Of Client Diversity"
+    link: "https://our.status.im/the-importance-of-client-diversity/"
+  - title: "Lighthouse: Why You Should Switch To Lighthouse"
+    link: "https://lighthouse.sigmaprime.io/switch-to-lighthouse.html"
+  - title: "Chainsafe: Client Diversity In Decentralized Networks"
+    link: "https://medium.com/chainsafe-systems/on-client-diversity-in-decentralized-networks-848aeedfb49d"
+  - title: "The Financial Incentive To Run A Minority Client"
+    link: "https://www.reddit.com/r/ethstaker/comments/ptm04i/the_financial_incentive_to_run_a_minority_client/"
+  - title: "What Happens If Beacon Chain Consensus Fails?"
+    link: "https://www.symphonious.net/2021/09/23/what-happens-if-beacon-chain-consensus-fails/"
+  - title: "Ben Edgington On Diversity, Scenarios, And Penalties"
+    link: "https://upgrading-ethereum.info/altair/part2/incentives/diversity"
+resources:
+  - category: Software
+    links:
+      - title: "Instant Validator"
+        link: "https://github.com/accidental-green/validator-install"
+      - title: "Eth-Wizard"
+        link: "https://github.com/stake-house/eth-wizard"
+      - title: "Eth-Docker"
+        link: "https://ethdocker.com/"
+      - title: "Stereum"
+        link: "https://stereum.net/"
+      - title: "Vouch"
+        link: "https://github.com/attestantio/vouch"
+      - title: "Kotal"
+        link: "https://www.kotal.co/"
+  - category: Data
+    links:
+      - title: "Staking Pool Client Diversity"
+        link: "https://www.rated.network/"
+      - title: "Miga Labs Dashboard"
+        link: "https://monitoreth.io/"
+      - title: "Chainsafe Nodewatch"
+        link: "https://www.nodewatch.io/"
+      - title: "Proposer Diversity Data"
+        link: "https://github.com/sigp/blockprint/blob/main/docs/api.md"
+      - title: "Rated.Network Validator Ratings"
+        link: "https://www.rated.network/"
+      - title: "Financial Risk Per Consensus Client"
+        link: "https://www.slashed.info/"
+  - category: Tools
+    links:
+      - title: "Ethereum Staking Resources"
+        link: "https://ethstaker.cc/resources"
+      - title: "Keymanager APIs"
+        link: "https://github.com/ethereum/keymanager-APIs"
+  - category: Research
+    links:
+      - title: "Client Fingerprinting"
+        link: "https://twitter.com/sproulM_/status/1440512518242197516"
+      - title: "EIP-3076: Slashing Protection Interchange Format"
+        link: "https://eips.ethereum.org/EIPS/eip-3076"
+
+
+
+

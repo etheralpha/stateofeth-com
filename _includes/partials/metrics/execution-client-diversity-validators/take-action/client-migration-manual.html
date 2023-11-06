@@ -1,0 +1,158 @@
+{%- capture content -%}
+<!-- <p>As a node operator you can switch to minority clients. Use this tool to find manual migration guides.</p> -->
+<p>Migrate to a minority client using step-by-step guides.</p>
+
+<div class="input-group mb-3">
+  <label class="input-group-text" for="fromSelect">From</label>
+  <select class="form-select" id="fromSelect" onchange="preventDoubleClientSelect('fromSelect')">
+    <option value="none" selected disabled hidden>Choose...</option>
+    <option value="blank">Fresh Install</option>
+    <option value="lighthouse">Lighthouse</option>
+    <option value="lodestar">Lodestar</option>
+    <option value="nimbus">Nimbus</option>
+    <option value="prysm">Prysm</option>
+    <option value="teku">Teku</option>
+    <option value="grandine">Grandine</option>
+  </select>
+</div>
+<div class="input-group mb-3">
+  <label class="input-group-text" for="toSelect">To</label>
+  <select class="form-select" id="toSelect" onchange="preventDoubleClientSelect('toSelect')">
+    <option value="none" selected disabled hidden>Choose...</option>
+    <option value="lighthouse">Lighthouse</option>
+    <option value="lodestar">Lodestar</option>
+    <option value="nimbus">Nimbus</option>
+    <option value="prysm">Prysm</option>
+    <option value="teku">Teku</option>
+    <option value="grandine">Grandine</option>
+  </select>
+</div>
+<a onclick="getGuides()" class="btn btn-primary">Search Guides</a>
+<hr>
+<div id="error" class="d-none text-danger">
+  <p>Error: Select both To and From clients</p>
+</div>
+<div id="noGuides" class="d-none">
+  <p>There are no guides for this migration yet.</p>
+</div>
+<div id="guideList" class="d-none">
+  <!-- Populated w/ JS based on matching results from _data/migration-guides.yml -->
+</div>
+
+{%- endcapture -%}
+
+
+{% include components/details.html
+  title="Node Operators - Manual Client Migration Guides"
+  body=content
+%}
+
+
+<script type="text/javascript">
+  let guides = {{site.data.metrics.consensus-client-diversity-validators.consensus-migration-guides | jsonify}};
+
+  // error migrationPath noGuides guides
+  function getGuides() {
+    let fromSelect = document.getElementById('fromSelect');
+    let toSelect = document.getElementById('toSelect');
+    let error = document.getElementById('error');
+    let noGuides = document.getElementById('noGuides');
+    let guideList = document.getElementById('guideList');
+    let fromClient = fromSelect.value[0].toUpperCase() + fromSelect.value.substring(1);
+    let toClient = toSelect.value[0].toUpperCase() + toSelect.value.substring(1);
+
+    if (fromSelect.value == "none" || toSelect.value == "none") {
+      // show error if To and From clients not selected
+      hideSwitchSections();
+      error.classList.remove("d-none");
+    } else {
+      hideSwitchSections();
+      // check if guide exists
+      let path = fromSelect.value + "_to_" + toSelect.value;
+      // do checking...
+      if (guides[path] == "" || guides[path] == null) {
+        noGuides.classList.remove("d-none");
+      } else {
+        // build guide link list elements
+        let guideLinks = "";
+        guides[path].forEach(function (guide) {
+          let link = guide["link"];
+          let author = "";
+          if (guide["author"]) {
+            author = ", by " + guide["author"];
+          }
+          let note = "";
+          if (guide["note"]) {
+            note = " (" + guide["note"] + ")";
+          }
+          let type = "";
+          switch (guide["type"]) {
+            case 'doc':
+              type = '{{site.data.icons.docs}}';
+              break;
+            case 'video':
+              type = '{{site.data.icons.youtube}}';
+              break;
+            case 'tool':
+              type = '{{site.data.icons.tool}}';
+              break;
+          }
+          let guideLink = "";
+          // create link, language based on fresh install or migration
+          if (fromClient == "Blank") {
+            guideLink =  `
+              <p>
+                ${type}
+                <a href="${link}" target="_blank">${toClient} fresh install guide${note}${author}</a>
+              </p>`
+          } else {
+            guideLink =  `
+              <p>
+                ${type}
+                <a href="${link}" target="_blank">${fromClient} to ${toClient} migration guide${note}${author}</a>
+              </p>`
+            }
+          guideLinks += guideLink;
+        });
+        guideList.innerHTML = guideLinks;
+        guideList.classList.remove("d-none");
+      }
+    }
+  }
+
+  // reset view by hiding all response elements
+  function hideSwitchSections() {
+    let error = document.getElementById('error').classList.add("d-none");
+    let noGuides = document.getElementById('noGuides').classList.add("d-none");
+    let guideList = document.getElementById('guideList').classList.add("d-none");
+  }
+
+  // when a client is selected in one list, disable it in the other list
+  function preventDoubleClientSelect(select) {
+    let fromSelect = document.getElementById('fromSelect');
+    let toSelect = document.getElementById('toSelect');
+
+    if (select == "fromSelect") {
+      let fromClient = fromSelect.value;
+      for (var i = 0; i < toSelect.length; i++) {
+        if (toSelect.options[i].value == fromClient) {
+          toSelect.options[i].disabled = true;
+          // toSelect.remove(i);
+        } else if (toSelect.options[i].value != "openethereum") {
+          toSelect.options[i].disabled = false;
+        }
+      }
+    }
+    if (select == "toSelect") {
+      let toClient = toSelect.value;
+      for (var i = 0; i < fromSelect.length; i++) {
+        if (fromSelect.options[i].value == toClient) {
+          fromSelect.options[i].disabled = true;
+          // fromSelect.remove(i);
+        } else {
+          fromSelect.options[i].disabled = false;
+        }
+      }
+    }
+  }
+</script>

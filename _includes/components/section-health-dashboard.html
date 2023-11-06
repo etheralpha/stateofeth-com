@@ -1,0 +1,392 @@
+<style type="text/css">
+  #healthDashboard .table th:first-child,
+  #healthDashboard .table td:first-child {
+    position: unset; /*undoes the sticky first column*/
+  }
+  #healthDashboard .star-tooltip {
+    position: relative;
+    top: 5px;
+  }
+  #healthDashboard th.stars,
+  #healthDashboard td.stars {
+    width: 48px;
+  }
+  #healthDashboard .star svg {
+    fill: transparent;
+    stroke: var(--bs-body-color);
+    opacity: 0.9;
+  }
+  #healthDashboard .star.favorite svg {
+    fill: gold;
+    stroke: gold;
+  }
+  #healthDashboard th.category,
+  #healthDashboard td.category {
+    width: 48px;
+  }
+  #healthDashboard td.metric {
+    padding-top: 0.625rem;
+  }
+  #healthDashboard th.metric,
+  #healthDashboard td.metric {
+    width: 300px;
+    min-width: 260px;
+    max-width: 300px;
+  }
+  #healthDashboard td.health > div {
+    /*padding-top: 1.03rem;*/
+    margin-top: 0.5rem
+  }
+  #healthDashboard th.health,
+  #healthDashboard td.health {
+    /*width: 600px;*/
+  }
+  #healthDashboard td.health > div {
+    min-width: 200px;
+  }
+  #healthDashboard th.details,
+  #healthDashboard td.details {
+    width: 134px;
+    min-width: 134px;
+    max-width: 134px;
+  }
+  #healthDashboard .sort svg {
+    margin-top: -3px;
+    cursor: pointer;
+  }
+  #favoritingHelpText .help-star svg {
+    fill: transparent;
+    stroke: var(--bs-body-color);
+    opacity: 0.9;
+    margin-top: -5px;
+  }
+</style>
+
+{%- capture content -%}
+
+<div id="healthDashboard" class="table-responsive card">
+  <table id="healthDashboardTable" class="table">
+    <thead>
+      <tr>
+        <th>
+          <span class="star-tooltip">{{"" | tooltip: "Favorite a metric to add it to your watchlist dashboard."}}</span>
+        </th>
+        <th>
+          <span class="sort" onclick="sortHealthDashboardTable(this, 'category', 2)">{{site.data.icons.sort}}</span>
+        </th>
+        <th>
+          Metric
+          <span class="sort" onclick="sortHealthDashboardTable(this, 'metric', 3)">{{site.data.icons.sort}}</span>
+        </th>
+        <th>
+          Health
+          <span class="sort" onclick="sortHealthDashboardTable(this, 'health', 4)">{{site.data.icons.sort}}</span>
+        </th>
+        <th class="details"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in site.data.dashboards.health %}
+        {%- assign title = item.title -%}
+        {%- assign link = item.link -%}
+        {%- assign page_info = site.pages | where: 'id', item.id | first -%}
+        {%- if page_info -%}
+          {%- if page_info.health_title -%}
+            {%- assign title = page_info.health_title -%}
+          {%- else -%}
+            {%- assign title = page_info.title -%}
+          {%- endif -%}
+          {%- if page_info.permalink -%}
+            {%- assign link = page_info.permalink -%}
+          {%- else -%}
+            {%- assign link = page_info.url -%}
+          {%- endif -%}
+        {%- endif -%}
+        <tr id="{{item.id}}">
+          <td class="stars">
+            <span class="star" data-id="{{item.id}}">{{site.data.icons.star_fill}}</span>
+          </td>
+          <td class="category" data-sort="{{item.icon}}">
+            <span class="">{{site.data.icons[item.icon]}}</span>
+          </td>
+          <td class="metric" data-sort="{{title}}">
+            {%- capture badge -%}
+              <span class="badge border border-secondary text-secondary ms-0">SOON™</span>
+            {%- endcapture -%}
+            {%- assign color = "text-secondary" -%}
+            {%- if item.health or link -%}
+              {%- assign badge = "" -%}
+              {%- assign color = "" -%}
+            {%- endif -%}
+            {%- if item.disabled -%}
+              {%- assign badge = "" -%}
+              {%- assign color = "" -%}
+            {%- endif -%}
+            <div class="{{color}}">
+              {{badge}}
+              {{title}}
+            </div>
+          </td>
+          <td class="health" data-sort="{{item.health}}">
+            {%- if item.health and item.disabled != true -%}
+              {%- assign color = "warning" -%}
+              {%- assign state = "Caution" -%}
+              {%- if item.health >= 80 -%}
+                {%- assign color = "success" -%}
+                {%- assign state = "Great" -%}
+              {%- elsif item.health < 50 -%}
+                {%- assign color = "danger" -%}
+                {%- assign state = "Danger" -%}
+              {%- endif -%}
+              <div class="progress position-relative" 
+                data-bs-toggle="tooltip" 
+                data-bs-placement="top" 
+                data-bs-html="true"
+                data-bs-original-title="
+                  <div class=&quot;progress-tooltip text-start&quot;>
+                    <div class=&quot;mb-1 pb-1 text-center border-bottom border-secondary&quot;>
+                      Status:<br>{{item.health}}% ({{state}})
+                    </div>
+                    <div class=&quot;d-flex justify-content-between&quot;>
+                      <span class=&quot;me-2&quot;>Danger:</span><span>0-50%</span>
+                    </div>
+                    <div class=&quot;d-flex justify-content-between&quot;>
+                      <span class=&quot;me-2&quot;>Caution:</span><span>50-80%</span>
+                    </div>
+                    <div class=&quot;d-flex justify-content-between mb-1 pb-1 border-bottom border-secondary&quot;>
+                    <span class=&quot;me-2&quot;>Great:</span><span>80-100%</span>
+                    </div>
+                    <div>Go to View Details > Health to see how this is calculated.</div>
+                  </div>">
+                <div class="progress-bar position-absolute bg-{{color}}" role="progressbar" style="width: {{item.health}}%;" aria-valuenow="{{item.health}}" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-trans progress-danger" role="progressbar" style="width: 50%;"></div>
+                <div class="progress-bar bg-trans progress-warning" role="progressbar" style="width: 30%;"></div>
+                <div class="progress-bar bg-trans progress-success" role="progressbar" style="width: 20%;"></div>
+              </div>
+            {%- else -%}
+              <div class="progress pending position-relative" 
+                data-bs-toggle="tooltip" 
+                data-bs-placement="top" 
+                data-bs-html="true" 
+                data-bs-original-title="
+                  <div class=&quot;progress-tooltip text-start&quot;>
+                    <div>Data for this metric has not been integrated yet.</div>
+                  </div>">
+                <div class="progress-bar bg-trans progress-pending" role="progressbar" style="width: 100%;"></div>
+              </div>
+            {%- endif -%}
+          </td>
+          {%- assign disabled = "" -%}
+          {%- assign btn_color = "primary" -%}
+          {%- assign tooltip = "" -%}
+          {%- unless link and item.disabled != true -%}
+            {%- assign disabled = "disabled" -%}
+            {%- assign btn_color = "outline-secondary" -%}
+            {%- capture tooltip -%}
+              data-bs-toggle="tooltip" 
+              data-bs-placement="top" 
+              data-bs-html="true" 
+              data-bs-original-title="
+                <div class='progress-tooltip text-start'>
+                  <div>A page for this metric has not been created yet.</div>
+                </div>"
+            {%- endcapture -%}
+          {%- endunless -%}
+          <td class="details">
+            <div {{tooltip}}>
+              <a href="{{link}}" class="btn btn-sm btn-{{btn_color}} {{disabled}}">View Details</a>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+{%- capture favoriting_help_text -%}
+  To add a metric to your watchlist, click the {{site.data.icons.star_fill | addclass: "help-star"}} icon in the [Health Overview Dashboard](/dashboards/overview).
+{%- endcapture -%}
+{%- if include.dashboard == "favorites" -%}
+  <div id="favoritingHelpText">{{favoriting_help_text | markdownify}}</div>
+{%- endif -%}
+
+
+<script type="text/javascript">
+  window.addEventListener('load', function() {
+    getFavorites();
+    refreshFavorites();
+    {%- if include.dashboard == "favorites" -%}
+      showFavorites();
+    {%- endif -%}
+  });
+
+  // ids of favorited metrics
+  let favorites = [];
+  // options: "descending", "ascending", "initial"
+  let sortOrder = {
+    "category": "ascending",
+    "metric": "ascending",
+    "health": "ascending"
+  }
+  // used to save original format to revert to initial order
+  let originalRows;
+
+  function compareValues(a, b) {
+    // pad numbers with 0 placeholders so it sorts properly
+    const ne = str => str.replace(/\d+/g, n => n.padStart(8, "0"));
+    // compare values
+    return ne(a).localeCompare(ne(b));
+  }
+
+  function cloneRecursively(originalItem) {
+    let clonedItem = [...originalItem];
+    clonedItem.children = (clonedItem.children || []).map(cloneRecursively);
+    return clonedItem;
+  }
+
+  function sortHealthDashboardTable(sortEl, sortType, colNum) {
+    let table = document.querySelector("#healthDashboardTable tbody");
+    // get all the rows in this table:
+    let rows = Array.from(table.querySelectorAll(`tr`));
+    // save original format to revert to initial order
+    if (originalRows === undefined) {
+      // needs a deep clone
+      originalRows = cloneRecursively(rows);
+    }
+
+    // sort the rows
+    if (sortOrder[sortType] == "initial") {
+      // set sort icon style
+      document.querySelectorAll(".sort svg").forEach(item => {
+        item.setAttribute("style", "transform: rotate(0deg); fill: currentColor");
+      });
+      // set next sort method
+      sortOrder[sortType] = "ascending";
+      // update table with sorted rows
+      table.replaceChildren(...originalRows);
+    } else {
+      // remove items with no health value before sorting
+      rows = rows.filter(function(item) {
+        return item.querySelector(`td:nth-child(4)`).getAttribute('data-sort') != "";
+      })
+      rows.sort( (r1,r2) => {
+        // get each row's column and sorting content
+        let t1 = r1.querySelector(`td:nth-child(${colNum})`).getAttribute('data-sort');
+        let t2 = r2.querySelector(`td:nth-child(${colNum})`).getAttribute('data-sort');
+        // compare content
+        if (sortOrder[sortType] == "ascending") {
+          return compareValues(t1,t2);
+        } else if (sortOrder[sortType] == "descending") {
+          return compareValues(t2,t1);
+        }
+      });
+      if (sortOrder[sortType] == "ascending") {
+        // reset all sort icon styles
+        document.querySelectorAll(".sort svg").forEach(item => {
+          item.setAttribute("style", "transform: rotate(0deg); fill: currentColor");
+        });
+        // set current sort icon style
+        sortEl.querySelector("svg").setAttribute("style", "transform: rotate(180deg); fill: var(--soe-accent-blue)");
+        // set next sort method
+        sortOrder[sortType] = "descending";
+      } else if (sortOrder[sortType] == "descending") {
+        // reset all sort icon styles
+        document.querySelectorAll(".sort svg").forEach(item => {
+          item.setAttribute("style", "transform: rotate(0deg); fill: currentColor");
+        });
+        // set current sort icon style
+        sortEl.querySelector("svg").setAttribute("style", "transform: rotate(0deg); fill: var(--soe-accent-blue)");
+        // set next sort method
+        sortOrder[sortType] = "initial";
+      }
+      // update table with sorted rows
+      table.replaceChildren(...rows);
+    }
+  }
+
+  function getFavorites() {
+    // get saved favorites or create localstorage item
+    if (localStorage.getItem("favoriteMetrics") === null) {
+      localStorage.setItem("favoriteMetrics", JSON.stringify(favorites));
+    } else {
+      favorites = JSON.parse(localStorage.getItem("favoriteMetrics"));
+    }
+  }
+
+  // load favorited resources
+  function saveFavorites(starEl) {
+    // update saved favorites
+    if (starEl) {
+      let metricId = starEl.getAttribute('data-id');
+      let isFavorite = favorites.includes(metricId);
+      // if already favorited, unfavorite, else favorite
+      if (isFavorite) {
+        favorites = favorites.filter(item => item !== metricId);
+      } else {
+        favorites.push(metricId);
+      }
+      // save updated favorites
+      localStorage.setItem("favoriteMetrics", JSON.stringify(favorites));
+    }
+    refreshFavorites();
+  }
+
+  function refreshFavorites() {
+    let currentFavorites = document.querySelectorAll(`.favorite`);
+
+    {%- if include.dashboard == "favorites" -%}
+      if (favorites.length == 0) {
+        document.getElementById("healthDashboard").classList.add("d-none");
+      } else {
+        document.getElementById("healthDashboard").classList.remove("d-none");
+      }
+    {%- endif -%}
+
+    document.querySelectorAll(`.favorite`).forEach(item => {
+      item.classList.remove("favorite");
+    });
+
+    // add favorite star highlights
+    favorites.forEach(id => {
+      document.querySelectorAll(`#${id} .star`).forEach(item => {
+        item.classList.add("favorite");
+      });
+    });
+
+    // highlight favorites and add event listeners
+    const starEls = document.querySelectorAll('#healthDashboard .star');
+    starEls.forEach(el => {
+      if (favorites.includes(el.getAttribute('data-id'))) {
+        el.classList.add("favorite");
+      }
+      el.addEventListener('click', event => {
+        saveFavorites(el);
+        event.stopImmediatePropagation();
+      })
+    });
+
+    {%- if include.dashboard == "favorites" -%}
+      showFavorites();
+    {%- endif -%}
+    
+  }
+
+  function showFavorites() {
+    document.querySelectorAll('#healthDashboard .star').forEach(el => {
+      if (favorites.includes(el.getAttribute('data-id'))) {
+        document.getElementById(el.getAttribute('data-id')).classList.remove("d-none");
+      } else {
+        document.getElementById(el.getAttribute('data-id')).classList.add("d-none");
+      }
+    });
+  }
+</script>
+{%- endcapture -%}
+
+
+{% include components/card-text.html
+  title="Health"
+  body=content
+  tooltip="The health value is designed to provide a bird’s eye view on the general health of each metric in a normalized form."
+%}

@@ -1,6 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-  <body>
-    {{content}}
+<html lang="en" data-bs-theme="dark">
+  {%- include components/head.html -%}
+  <body class="d-block d-lg-flex">
+    {%- include components/toast.html -%}
+    <aside class="d-none d-lg-inline">
+      {%- include components/nav-menu.html -%}
+    </aside>
+    {%- include components/nav-menu-mobile.html -%}
+    <main class="flex-grow-1">
+      {% include components/card-alert.html
+        title="Health"
+        body="This is test data, it is not representative of the real data."
+        type="warning"
+      %}
+      {%- if page.title -%}
+        <h1 class="h3 mb-4 pb-2 fw-normal">{{page.title}}</h1>
+      {%- endif -%}
+      {{content}}
+      {%- include components/section-sponsors.html -%}
+    </main>
+    <script src="/assets/js/main.js" type="application/javascript"></script>
   </body>
 </html>

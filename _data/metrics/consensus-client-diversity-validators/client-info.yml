@@ -1,0 +1,86 @@
+## - name:       = client name
+##   link:       = link to website
+##   github:     = link to github
+##   docs:       = link to documentation
+##   chat:       = link to community chat
+##   status:     = (select one) Alpha, Beta, Stable
+##   support:    = Linux, Win, macOS, ARM
+##   lang        = programming language it's written in
+##   donate:     = link to gitcoin or etherscan address
+##   opensource: = true/false
+
+# Template to copy for new entries
+# - name: 
+#   link: 
+#   github: 
+#   docs: 
+#   chat: 
+#   status: 
+#   support: 
+#   donate: 
+#   opensource: 
+
+
+# Entries are shown in the order listed
+- name: Grandine
+  link: https://sifrai.com/
+  github: https://github.com/sifraitech/grandine
+  docs: https://github.com/sifraitech/grandine
+  chat: https://discord.gg/H9XCdUSyZd
+  status: Beta
+  support: Linux, Win, macOS
+  lang: 
+  donate: 
+  opensource: false
+- name: Lighthouse
+  link: https://lighthouse.sigmaprime.io/
+  github: https://github.com/sigp/lighthouse/
+  docs: https://lighthouse-book.sigmaprime.io/
+  chat: https://discord.gg/cyAszAh
+  status: Stable
+  support: Linux, Win, macOS, ARM
+  lang: Rust
+  donate: https://protocol-guild.readthedocs.io/en/latest/index.html
+  opensource: true
+- name: Lodestar
+  link: https://lodestar.chainsafe.io/
+  github: https://github.com/ChainSafe/lodestar
+  docs: https://hackmd.io/@philknows/rk5cDvKmK
+  # docs: https://chainsafe.github.io/lodestar/
+  chat: https://discord.gg/yjyvFRP
+  status: Stable
+  support: Linux, Win, macOS # windows theoretically works but not tested yet https://github.com/ChainSafe/lodestar/issues/3519
+  lang: TypeScript
+  donate: https://protocol-guild.readthedocs.io/en/latest/index.html
+  opensource: true
+- name: Nimbus
+  link: https://nimbus.team/
+  github: https://github.com/status-im/nimbus-eth2
+  docs: https://nimbus.team/docs/
+  chat: https://discord.gg/qnjVyhatUa
+  status: Stable
+  support: Linux, Win, macOS, ARM
+  lang: Nim
+  donate: 
+  opensource: true
+- name: Prysm
+  link: https://prysmaticlabs.com/
+  github: https://github.com/prysmaticlabs/prysm
+  docs: https://docs.prylabs.network/docs/getting-started/
+  chat: https://discord.gg/YMVYzv6
+  status: Stable
+  support: Linux, Win, macOS, ARM
+  lang: Golang
+  donate: funded # Supported by Offchain Labs
+  opensource: true
+- name: Teku
+  link: https://consensys.net/knowledge-base/ethereum-2/teku/
+  github: https://github.com/ConsenSys/teku
+  docs: https://docs.teku.consensys.net/en/latest/
+  chat: https://discord.gg/9mCVSY6
+  status: Stable
+  support: Linux, Win, macOS
+  lang: Java
+  donate: funded # funded by ConsenSys
+  opensource: true
+
