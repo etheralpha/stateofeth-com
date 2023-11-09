@@ -1,0 +1,21 @@
+{
+  "name": "Ruby",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": {
+      "VARIANT": "3.0.5"
+    }
+  },
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "ruby.lint": {
+      "rubocop": {
+        "useBundler": true
+      }
+    }
+  },
+  "extensions": [
+    "rebornix.ruby"
+  ]
+}
