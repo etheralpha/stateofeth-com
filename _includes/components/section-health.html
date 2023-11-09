@@ -1,11 +1,57 @@
-{%- capture content -%}
-The health value is designed to provide a bird's eye view on the general health of each metric in a normalized form.
+{%- comment -%}
+<!-- 
+{%- include components/section-health.html 
+  content=site.data.metrics.consensus-client-diversity-validators.content -%}
+-->
+{%- endcomment -%}
 
-{{include.data.health_methodology}}
+{%- capture health_value -%}
+  {%- include components/calculate_health.html id="consensus-client-diversity-validators" -%}
 {%- endcapture -%}
 
+
+{%- capture title -%}
+  Health - {{health_value | strip}}%
+{%- endcapture -%}
+
+
+{%- capture content -%}
+  The health ratings are designed to provide a bird's eye view on the general health of each metric in a normalized scale and format.
+
+  To normalize the metric data for the health rating, there's a few steps that need to be taken.
+
+  1. Take the top value from the metric data, such as the highest marketshare/diversity item. This will be referred to at the "metric value"
+  1. fdfd
+
+
+  his is calculated by taking the value of each metric, looking at its position within the current status range, and transposing that onto the normalized scale. Let's take a look at the example below:
+
+  <img src="/assets/img/health/format-transition.png" style="width: 700px; max-width: 100%;">
+
+  For Metric 1, you can see the scale is inverted, the status ranges are adjusted, and the meter is still positioned proportionally within the "caution" range (with inversion due to the reversal of the scale).
+
+  For Metric 2 the transition may be easier to understand since a scale inversion isn't needed.
+
+
+{%- endcapture -%}
+
+{%- capture content0 -%}
+  The health value is designed to provide a bird's eye view on the general health of each metric in a normalized format.
+
+  This is calculated by taking the value of each metric, looking at its position within the current status range, and transposing that onto the normalized scale. Let's take a look at the example below:
+
+  <img src="/assets/img/health/format-transition.png" style="width: 700px; max-width: 100%;">
+
+  For Metric 1, you can see the scale is inverted, the status ranges are adjusted, and the meter is still positioned proportionally within the "caution" range (with inversion due to the reversal of the scale).
+
+  For Metric 2 the transition may be easier to understand since a scale inversion isn't needed.
+
+
+{%- endcapture -%}
+
+
 {% include components/details.html
-  title="Health - 74.25%"
+  title=title
   body=content
 %}
 

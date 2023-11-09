@@ -1,5 +1,12 @@
+{%- comment -%}
+<!-- 
+{%- include components/section-take-action.html 
+  content=site.data.metrics.consensus-client-diversity-validators.content -%}
+-->
+{%- endcomment -%}
+
 {%- capture content -%}
-  {%- for item in include.data.take_action -%}
+  {%- for item in include.content.take_action -%}
     {%- if item.content contains "partials/metrics" -%}
       {%- capture include_content -%}
         {%- include {{item.content}} -%}

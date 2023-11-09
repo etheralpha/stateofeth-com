@@ -41,7 +41,7 @@
           title: Node Client Diversity
           label: Soon™
           disabled: true
-        - id: validatorConsensusClientDiversity
+        - id: consensus-client-diversity-validators
         - link: /metrics/consensus-client-count
           title: Client Count
           label: Soon™
@@ -85,6 +85,19 @@
           disabled: true
         - link: /metrics/geographic-diversity-validators
           title: Validators
+          label: Soon™
+          disabled: true
+    - subcategory: Block Building
+      icon: block_grid
+      label: Soon™
+      disabled: true
+      sub_items:
+        - link: /metrics/relay-diversity
+          title: Relay Diversity
+          label: Soon™
+          disabled: true
+        - link: /metrics/relay-censoring-marketshare
+          title: Relay Censoring Marketshare
           label: Soon™
           disabled: true
     - link: /metrics/node-count

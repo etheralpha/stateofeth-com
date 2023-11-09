@@ -22,7 +22,7 @@
   data: 
   health: 55
   icon: window_sidebar
-- id: validatorConsensusClientDiversity
+- id: consensus-client-diversity-validators
   title: Validator Consensus Client Diversity
   link: /metrics/consensus-client-diversity-validators
   data: 
@@ -105,7 +105,7 @@
   # link: /metrics/node-count
   data: 
   # health: 80
-  icon: plugin
+  icon: nuc
 - id: metaClientCount
   title: Meta Client Count
   # link: /metrics/meta-client-count
@@ -155,16 +155,21 @@
   # link: /metrics/l2-native-asset-marketshare
   data: 
   icon: stack
-- id: mevRelayDiversity
-  title: MEV Relay Diversity
-  # link: /metrics/mev-relay-diversity
+- id: relayDiversity
+  title: Relay Diversity
+  # link: /metrics/relay-diversity
   data: 
   icon: block_grid
-- id: mevRelayCensoringMarketshare
-  title: MEV Relay Censoring Marketshare
-  # link: /metrics/mev-relay-censoring-marketshare
+- id: relayCensoringMarketshare
+  title: Relay Censoring Marketshare
+  # link: /metrics/relay-censoring-marketshare
   data: 
   icon: block_grid
+- id: energyUsage
+  title: Energy Usage
+  # link: /metrics/energy-usage
+  data: 
+  icon: plugin
 - id: validatorAffordability
   title: Validator Affordability
   # link: /metrics/validator-affordability

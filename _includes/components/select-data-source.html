@@ -1,7 +1,7 @@
 {%- assign metric_id = include.metric_id -%}
 {%- assign data = include.data -%}
 <div class="data-source-select pb-2">
-  <select id="{{metric_id}}Select" 
+  <select id="{{metric_id}}-select" 
         class="form-select w-auto" 
         aria-label="Select data source" 
         onchange="updateDataSource(this)">

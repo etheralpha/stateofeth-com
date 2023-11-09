@@ -167,7 +167,8 @@ btn-check:checked+.btn,
   padding-bottom: 0;
   margin-bottom: 0;
 }
-.alert svg {
+.alert > svg,
+.alert details summary > svg {
   margin-top: 0.15rem;
   margin-right: 0.5rem;
 }
@@ -191,15 +192,18 @@ li {
 
 
 
-summary {
+details summary {
   display: flex;
   font-weight: 500;
   opacity: 1;
 }
+details summary p {
+  margin-bottom: 0;
+}
 details > :not(summary) {
   /*padding-left: 1rem;*/
 }
-summary > .arrowicon {
+details summary > .arrowicon {
   margin-left: auto;
   margin-top: -1px;
 }
@@ -216,8 +220,8 @@ details[open] summary > .arrowicon {
 }
 details[disabled] summary,
 details.disabled summary,
-summary[disabled],
-summary.disabled {
+details summary[disabled],
+details summary.disabled {
   opacity: 0.5 !important;
   pointer-events: none !important;
   cursor: default !important;
@@ -229,7 +233,7 @@ summary.disabled {
 
 
 .card .table {
-  --bs-table-bg: transparent;
+  --bs-table-bg: var(--bs-body-bg);
   margin-bottom: 0;
 }
 .table>:not(caption)>*>* {

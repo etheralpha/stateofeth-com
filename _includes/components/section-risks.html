@@ -1,12 +1,19 @@
+{%- comment -%}
+<!-- 
+{%- include components/section-risks.html 
+  content=site.data.metrics.consensus-client-diversity-validators.content -%}
+-->
+{%- endcomment -%}
+
 {%- capture further_reading -%}
-  {% for item in include.data.further_reading %}
+  {% for item in include.content.further_reading %}
 - [{{item.title}}]({{item.link}})
   {%- endfor -%}
 {%- endcapture -%}
 
 
 {%- capture content -%}
-{{include.data.risks}}
+{{include.content.risks}}
 
 {% include components/details.html
   title="Further reading..."

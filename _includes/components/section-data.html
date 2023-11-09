@@ -1,5 +1,12 @@
+{%- comment -%}
+<!-- 
+{%- include components/section-data.html 
+  content=site.data.metrics.consensus-client-diversity-validators.content -%}
+-->
+{%- endcomment -%}
+
 {%- assign metric_id = page.id -%}
-{%- assign data_folder = include.data.data.data_folder | remove: "site/" | remove: "_data/" | remove: "data/" | split: "/" -%}
+{%- assign data_folder = include.content.data.data_folder | remove: "site/" | remove: "_data/" | remove: "data/" | split: "/" -%}
 {%- assign data_path = site.data -%}
 {%- for item in data_folder -%}
   {%- assign data_path = data_path[item] -%}
@@ -9,10 +16,10 @@
 {%- capture content -%}
   {% include components/select-data-source.html
     metric_id=metric_id
-    data=include.data
+    data=include.content
   %}
 
-  {%- for dataset in include.data.data.datasets -%}
+  {%- for dataset in include.content.data.datasets -%}
     {%- assign chart_id = metric_id | append: dataset.data_source -%}
 
     {%- assign visibility = "" -%}
@@ -25,9 +32,8 @@
   {% include components/data-progress-bars.html
     data=data
     data_source=dataset.data_source
-    success_end=include.data.data.data_limits.success_end
-    danger_start=include.data.data.data_limits.danger_start
     data_attribute=dataset.data_attribute
+    content=include.content
   %}
 
   {%- assign data = data_path[dataset.data_file_name] -%}

@@ -1,10 +1,10 @@
 {%- comment -%}
 <!-- 
 {% include components/data-progress-bars.html
-  data=""
-  danger_start=""
-  success_end=""
-  data_attribute=""
+  data=data
+  data_source=dataset.data_source
+  data_attribute=dataset.data_attribute
+  content=include.content
 %}
 -->
 {%- endcomment -%}
@@ -12,17 +12,43 @@
 {%- assign all_data = include.data -%}
 {%- assign spot_data = all_data | last -%}
 {%- assign data = spot_data.data.distribution -%}
+{%- assign success_start = include.content.data.data_limits.success_start -%}
+{%- assign warning_start = include.content.data.data_limits.warning_start -%}
+{%- assign danger_start = include.content.data.data_limits.danger_start -%}
+{%- assign critical_start = include.content.data.data_limits.critical_start -%}
+{%- assign max_value = include.content.data.data_limits.max_value -%}
+
+{%- assign max_value_int = max_value | times: 1.00 -%}
+{%- assign success_width = warning_start | divided_by: max_value_int | times: 100 -%}
+{%- assign warning_width = danger_start | minus: warning_start | divided_by: max_value_int | times: 100 -%}
+{%- assign danger_width = max_value | minus: danger_start | divided_by: max_value_int | times: 100 -%}
+
+{%- assign percent = "" -%}
+{%- if max_value == 100 -%}
+  {%- assign percent = "%" -%}
+{%- endif -%}
+
+{%- assign great_range = "0" | append: "-" | append: warning_start | append: percent -%}
+{%- assign caution_range = warning_start | append: "-" | append: danger_start | append: percent -%}
+{%- assign danger_range = danger_start | append: "+" -%}
+{%- if max_value == 100 -%}
+  {%- assign danger_range = danger_start | append: "-" | append: "100%" -%}
+{%- endif -%}
 
 
 <div>
   {%- for item in data -%}
     {%- assign name = item.name | capitalize -%}
-    {%- assign value = item.value | times: 100 | round: 2 -%}
+    {%- assign value = item.value -%}
+    {%- if max_value == 100 -%}
+      {%- assign value = item.value | round: 4 | divided_by: max_value_int | times: 10000 -%}
+    {%- endif -%}
+
     {%- assign accuracy = "no data" -%}
     {%- if item.accuracy != "no data" -%}
       {%- assign accuracy = item.accuracy | times: 100 | round: 1 | append: "%" -%}
     {%- endif -%}
-
+    
     {%- capture accuracy_tooltip -%}
       <div class="d-flex justify-content-between">
         <span class="me-2">accuracy:</span><span>{{accuracy}}</span>
@@ -34,35 +60,30 @@
 
     {%- assign color = "success" -%}
     {%- assign status = "great!" -%}
-    {%- if value > include.danger_start -%}
+    {%- if value > danger_start -%}
       {%- assign color = "danger" -%}
       {%- assign status = "danger!" -%}
-    {%- elsif value > include.success_end -%}
+    {%- elsif value > warning_start -%}
       {%- assign color = "warning" -%}
       {%- assign status = "caution" -%}
     {%- endif -%}
 
-    {%- assign success_width = include.success_end -%}
-    {%- assign danger_width = 100 | minus: include.danger_start -%}
-    {%- assign warning_width = 100 | minus: success_width | minus: danger_width -%}
-
-
     <div class="my-2">
-      <label class="form-label my-0 py-0">{{name}} - {{value}}%</label>
+      <label class="form-label my-0 py-0">{{name}} - {{value}}{{percent}}</label>
       <div class="progress position-relative" 
           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title='
               <div class="progress-tooltip text-capitalize text-start">
                 <div class="mb-1 pb-1 text-center border-bottom border-secondary">
-                  {{name}} Status:<br>{{value}}% ({{status}})
+                  {{name}} Status:<br>{{value}}{{percent}} ({{status}})
                 </div>
                 <div class="d-flex justify-content-between">
-                  <span class="me-2">Great:</span><span>0-{{include.success_end}}%</span>
+                  <span class="me-2">Great:</span><span>{{great_range}}</span>
                 </div>
                 <div class="d-flex justify-content-between">
-                  <span class="me-2">Caution:</span><span>{{include.success_end}}-{{include.danger_start}}%</span>
+                  <span class="me-2">Caution:</span><span>{{caution_range}}</span>
                 </div>
                 <div class="d-flex justify-content-between mb-1 pb-1 border-bottom border-secondary">
-                <span class="me-2">Danger:</span><span>{{include.danger_start}}-100%</span>
+                <span class="me-2">Danger:</span><span>{{danger_range}}</span>
                 </div>
                 {{accuracy_tooltip}}
               </div>'>

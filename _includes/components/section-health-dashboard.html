@@ -129,6 +129,11 @@
           </td>
           <td class="health" data-sort="{{item.health}}">
             {%- if item.health and item.disabled != true -%}
+              {%- capture health_value -%}
+                {%- include components/calculate_health.html id="consensus-client-diversity-validators" -%}
+              {%- endcapture -%}
+              {%- assign health_value = health_value | strip -%}
+
               {%- assign color = "warning" -%}
               {%- assign state = "Caution" -%}
               {%- if item.health >= 80 -%}
@@ -145,7 +150,7 @@
                 data-bs-original-title="
                   <div class=&quot;progress-tooltip text-start&quot;>
                     <div class=&quot;mb-1 pb-1 text-center border-bottom border-secondary&quot;>
-                      Status:<br>{{item.health}}% ({{state}})
+                      Status:<br>{{health_value}}% ({{state}})
                     </div>
                     <div class=&quot;d-flex justify-content-between&quot;>
                       <span class=&quot;me-2&quot;>Danger:</span><span>0-50%</span>
@@ -158,7 +163,7 @@
                     </div>
                     <div>Go to View Details > Health to see how this is calculated.</div>
                   </div>">
-                <div class="progress-bar position-absolute bg-{{color}}" role="progressbar" style="width: {{item.health}}%;" aria-valuenow="{{item.health}}" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar position-absolute bg-{{color}}" style="width: {{health_value}}%;" aria-valuenow="{{health_value}}" aria-valuemin="0" aria-valuemax="100" role="progressbar"></div>
                 <div class="progress-bar bg-trans progress-danger" role="progressbar" style="width: 50%;"></div>
                 <div class="progress-bar bg-trans progress-warning" role="progressbar" style="width: 30%;"></div>
                 <div class="progress-bar bg-trans progress-success" role="progressbar" style="width: 20%;"></div>

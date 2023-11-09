@@ -1,8 +1,12 @@
 {%- comment -%}
 <!-- 
 {% include components/card-alert.html
+  title=""
   body=""
   type="info|primary|secondary|success|danger|warning|light|dark"
+  button_text=""
+  button_link=""
+  open="true|false"
 %}
 -->
 {%- endcomment -%}
@@ -43,11 +47,53 @@
   {%- assign icon = "" -%}
 {%- endif -%}
 
+
+<style type="text/css">
+  .alert-details details summary {
+    font-weight: 400;
+    padding-top: 3.5px;
+    padding-bottom: 3px;
+  }
+  .alert-details details[open] summary > .arrowicon {
+    
+  }
+  .alert-details hr {
+    margin-top: 13px;
+  }
+
+  .alert-details .btn {
+    color: var(--bs-{{include.type}}-bg-subtle);
+    background-color: var(--bs-{{include.type}}-text-emphasis);
+  }
+
+  .alert-details .btn:hover {
+    border-color: var(--bs-{{include.type}}-border-subtle);
+  }
+</style>
+
 {%- if include.body -%}
+  <div class="alert alert-details {{type}}" role="alert">
+    {%- if include.open -%}
+      {%- assign open = "open" -%}
+    {%- endif -%}
+    <details {{open}}>
+      <summary>
+        {{icon}}
+        {{include.title | markdownify}}
+        <span class="arrowicon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+      </summary>
+      <hr>
+      <div class="pb-2">
+        {{include.body | markdownify}}
+        {%- if include.button_link and include.button_text -%}
+          <a class="btn" href="{{include.button_link}}" role="button">{{include.button_text}}</a>
+        {%- endif -%}
+      </div>
+    </details>
+  </div>
+{%- else -%}
   <div class="alert {{type}} d-flex" role="alert">
     {{icon}}
-    <div>
-      {{include.body | markdownify}}
-    </div>
+    {{include.title | markdownify}}
   </div>
 {%- endif -%}

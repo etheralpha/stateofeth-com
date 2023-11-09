@@ -1,3 +1,10 @@
+{%- comment -%}
+<!-- 
+{%- include components/section-toc.html 
+  content=site.data.metrics.consensus-client-diversity-validators.content -%}
+-->
+{%- endcomment -%}
+
 <style type="text/css">
   /*.btn {
     border-radius: 0.75rem;
@@ -25,7 +32,7 @@
 
 <div class="toc">
   <p class="d-flex no-wrap">
-    {%- for item in include.data.toc -%}
+    {%- for item in include.content.toc -%}
       {%- assign header = "" | append: item -%}
       <a href="{{header | anchor}}" class="btn me-1 mb-2">{{item}}</a>
     {%- endfor -%}

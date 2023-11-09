@@ -1,0 +1,91 @@
+{%- comment -%}
+<!-- 
+{%- capture health_value -%}
+  {%- include components/calculate_health.html id=metric.id -%}
+{%- endcapture -%}
+-->
+{%- endcomment -%}
+
+
+{%- assign data_folder = include.id | append: "/" | split: "/" | first -%}
+{%- assign data_path = site.data.metrics -%}
+{%- for item in data_folder -%}
+  {%- assign data_path = data_path[item] -%}
+{%- endfor -%}
+{%- assign content_file = data_path.content -%}
+
+{%- assign success_start = content_file.data.data_limits.success_start -%}
+{%- assign warning_start = content_file.data.data_limits.warning_start -%}
+{%- assign danger_start = content_file.data.data_limits.danger_start -%}
+{%- assign critical_start = content_file.data.data_limits.critical_start -%}
+{%- assign max_value = content_file.data.data_limits.max_value -%}
+
+{%- assign health_success_start = 80 -%}
+{%- assign health_warning_start = 50 -%}
+{%- assign health_danger_start = 5 -%}
+{%- assign health_success_range = 100 | minus: health_success_start -%}
+{%- assign health_warning_range = health_success_start | minus: health_warning_start -%}
+{%- assign health_danger_range = health_warning_start | minus: health_danger_start -%}
+{%- assign health_critical_range = health_danger_start -%}
+
+{%- assign data_set = content_file.data.datasets | first -%}
+{%- assign data_file_name = data_set.data_file_name -%}
+{%- assign data_obj_key = data_set.data_obj_key -%}
+{%- assign all_data = data_path[data_file_name] -%}
+{%- assign spot_data = all_data | last -%}
+{%- assign spot_data_array = spot_data.data[data_obj_key] -%}
+{%- assign spot_data_obj = spot_data_array | first -%}
+
+{%- assign data_value = spot_data_obj.value | times: 100 -%}
+{%- assign health_value = nil -%}
+
+{%- if data_value >= critical_start -%}
+  {%- assign health_value = 1 -%}
+  {%- assign scope = "critical" -%}
+  {%- assign delta = data_value | minus: critical_start -%}
+  {%- assign range = max_value | minus: critical_start -%}
+  {%- assign range_percentage = delta | plus: 0.00 | divided_by: range -%}
+  {%- assign range_percentage = 1 | minus: range_percentage -%}
+  {%- assign health_value = health_critical_range | times: range_percentage -%}
+  {%- if health_value < 1 -%}
+    {%- assign health_value = 1 -%}
+  {%- endif -%}
+{%- elsif data_value >= danger_start -%}
+  {%- assign scope = "danger" -%}
+  {%- assign delta = data_value | minus: danger_start -%}
+  {%- assign range = critical_start | minus: danger_start -%}
+  {%- assign range_percentage = delta | plus: 0.00 | divided_by: range -%}
+  {%- assign range_percentage = 1 | minus: range_percentage -%}
+  {%- assign health_value = health_danger_range | times: range_percentage | plus: health_danger_start -%}
+{%- elsif data_value >= warning_start -%}
+  {%- assign scope = "warning" -%}
+  {%- assign delta = data_value | minus: warning_start -%}
+  {%- assign range = danger_start | minus: warning_start -%}
+  {%- assign range_percentage = delta | plus: 0.00 | divided_by: range -%}
+  {%- assign range_percentage = 1 | minus: range_percentage -%}
+  {%- assign health_value = health_warning_range | times: range_percentage | plus: health_warning_start -%}
+{%- else -%}
+  {%- assign scope = "success" -%}
+  {%- assign delta = data_value | minus: success_start -%}
+  {%- assign range = warning_start | minus: success_start -%}
+  {%- assign range_percentage = delta | plus: 0.00 | divided_by: range -%}
+  {%- assign range_percentage = 1 | minus: range_percentage -%}
+  {%- assign health_value = health_success_range | times: range_percentage | plus: health_success_start -%}
+{%- endif -%}
+
+{%- comment -%}
+  <script type="text/javascript">
+    console.log({"scope": {{scope}}});
+    console.log({"success_start": {{success_start}}});
+    console.log({"warning_start": {{warning_start}}});
+    console.log({"danger_start": {{danger_start}}});
+    console.log({"critical_start": {{critical_start}}});
+    console.log({"data_value": {{data_value | jsonify}}});
+    console.log({"delta": {{delta}}});
+    console.log({"range": {{range}}});
+    console.log({"range_percentage": {{range_percentage}}});
+    console.log({"health_value": {{health_value | round: 2 }}});
+  </script>
+{%- endcomment -%}
+
+{{health_value | round: 2}}
