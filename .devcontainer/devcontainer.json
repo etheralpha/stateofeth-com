@@ -4,18 +4,7 @@
     "dockerfile": "Dockerfile",
     "context": "..",
     "args": {
-      "VARIANT": "3.0.5"
+      "VARIANT": "2.7.8"
     }
-  },
-  "settings": {
-    "terminal.integrated.shell.linux": "/bin/bash",
-    "ruby.lint": {
-      "rubocop": {
-        "useBundler": true
-      }
-    }
-  },
-  "extensions": [
-    "rebornix.ruby"
-  ]
+  }
 }
