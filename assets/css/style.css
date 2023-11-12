@@ -38,10 +38,20 @@ main {
   max-height: 100vh;
   padding: 1.75rem;
   overflow-y: scroll;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+main::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
 }
 @media only screen and (max-width: 575px) {
   main {
     padding: 0.75rem;
+  }
+}
+@media only screen and (max-width: 992px) {
+  main {
+    padding-top: calc(1.75rem / 2 + 52px) !important;
   }
 }
 aside {
@@ -256,7 +266,12 @@ table tbody tr:last-child {
 .table-responsive {
   max-height: 650px;
   overflow: scroll;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
   position: relative!important;
+}
+.table-responsive::-webkit-scrollbar {
+  display: none;
 }
 @media only screen and (max-width: 575px) {
   .table-responsive {
