@@ -14,8 +14,7 @@ print(f"Date: {date}")
 
 pp = pprint.PrettyPrinter(indent=4)
 use_test_data = True
-print_fetch_data = False
-print_processed_data = True
+print_logs = True
 pretty_print = True
 exit_on_fetch_error = True
 exit_on_save_error = True
@@ -50,7 +49,8 @@ def fetch_json(url, method="GET", payload={}, headers={}, retries=2):
     else:
       print(error)
   finally:
-    print_data("fetch", response, label=None)
+    context = f"Fetch {url}"
+    print_data(data=response, context=context)
     return response
 
 def save_to_file(rel_path, data):
@@ -145,21 +145,13 @@ def print_file(rel_path):
   else:
     print("not file")
 
-def print_data(context, data, label=None):
-  if context == "fetch" and print_fetch_data:
-    if label:
-      print(f"{label}:")
-    if pretty_print:
-      pp.pprint(data)
-    else:
-      print(data)
-  if context == "processed" and print_processed_data:
-    if label:
-      print(f"{label}:")
-    if pretty_print:
-      pp.pprint(data)
-    else:
-      print(data)
+def log(data, context=None):
+  if context:
+    print(f"{context}:")
+  if pretty_print:
+    pp.pprint(data)
+  else:
+    print(data)
 
 def pprint(data):
   pp.pprint(data)
